@@ -1,0 +1,20 @@
+<mat-card >
+  <mat-card-header>
+    <mat-card-title>CliniLog</mat-card-title>
+    <mat-card-subtitle>Login</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input [(ngModel)]="usuario" name="usuario" matInput placeholder="Usuário">
+      </mat-form-field>
+      <mat-form-field>
+        <input [(ngModel)]="password" name="password" matInput placeholder="Senha" type="password">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="fazerLogin()">Entrar</button>
+    <p class="fazerCadastro"><small>Não tem usuário ? Clique <a href="/cadastro" >aqui</a> para fazer seu cadastro.</small></p>
+  </mat-card-actions>
+</mat-card>
