@@ -1,13 +1,18 @@
 .containerLogin{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex-wrap: nowrap;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
-  }
-  .backgroundLogin{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+}
+.containerLogin:has(app-login){
+  justify-content: center;
+}
+.containerLogin:has(app-cadastro){
+  justify-content: flex-start;
+}
+.backgroundLogin{
   position: fixed;
   height: 100%;
   width: 100%;
@@ -19,5 +24,5 @@
   background-position: center;
   filter: blur(10px);
   z-index: -1;
-  }
+}
   

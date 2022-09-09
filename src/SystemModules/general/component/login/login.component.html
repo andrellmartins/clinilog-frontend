@@ -6,10 +6,10 @@
   <mat-card-content>
     <form>
       <mat-form-field>
-        <input [(ngModel)]="usuario" name="usuario" matInput placeholder="Usuário">
+        <input [(ngModel)]="usuario.login" name="usuario" matInput placeholder="Usuário">
       </mat-form-field>
       <mat-form-field>
-        <input [(ngModel)]="password" name="password" matInput placeholder="Senha" type="password">
+        <input [(ngModel)]="usuario.password" name="password" matInput placeholder="Senha" type="password">
       </mat-form-field>
     </form>
   </mat-card-content>
@@ -18,3 +18,12 @@
     <p class="fazerCadastro"><small>Não tem usuário ? Clique <a href="/cadastro" >aqui</a> para fazer seu cadastro.</small></p>
   </mat-card-actions>
 </mat-card>
+
+
+<swal #swalService
+ [text] = "swalService.text" 
+ [titleText] = "swalService.titleText" 
+ [icon] = "swalService.icon" 
+ (didClose)="onCloseModal()"
+ >
+</swal>

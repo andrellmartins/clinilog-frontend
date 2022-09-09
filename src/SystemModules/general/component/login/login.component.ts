@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpEventType, HttpResponse, HttpStatusCode } from '@angular/common/http';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
 
@@ -8,25 +10,54 @@ import { UserService } from '../../service/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @Input('ngModel')
-  usuario!:string;
-  @Input('ngModel')
-  password!:string;
+  @ViewChild("swalService")
+  swalService!:SwalComponent;
+  usuario!:User;
 
   constructor(
     private userService:UserService
   ) { 
+    this.usuario = new User;
   }
 
   ngOnInit(): void {
   }
 
   fazerLogin(){
-    console.log("Login Using",this.usuario,this.password);
-    let user:User = new User();
-    user.login = this.usuario;
-    user.password = this.password;
-    this.userService.login(user);
+    console.log("Login Using",this.usuario);
+    this.userService.login(this.usuario)
+    .subscribe({
+      next:(user:any) => {
+        console.log(user);
+        this.swalService.titleText = 'Login feito com sucesso';
+        this.swalService.text = user.firstName;
+        this.swalService.icon = "success";
+        
+        this.onCloseModal = () => {
+          window.location.href = '/inicio';
+        }
+
+        this.swalService.fire();
+      },
+      error:(err:HttpErrorResponse)=>{
+        this.swalService.titleText = 'Erro ao Fazer Login'
+        let mensagem = err.message;
+
+        if(err.status === HttpStatusCode.Forbidden) {
+          mensagem = "Não foi possível fazer Login, usuário ou senha incorretos";
+        }
+
+        this.swalService.text = `${err.status}: ${mensagem}`
+        this.swalService.icon = "error"
+        this.swalService.fire();
+
+        this.onCloseModal = () => {
+        }
+      }
+    });
   }
 
-}
+  onCloseModal = () => {
+  }
+
+} 

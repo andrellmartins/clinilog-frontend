@@ -1,1 +1,70 @@
-<p>cadastro works!</p>
+<mat-card >
+    <mat-card-header>
+      <mat-card-title>CliniLog</mat-card-title>
+      <mat-card-subtitle>Cadastro</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="clienteDTOForm">
+        <mat-list>
+          <mat-list-item>Dados Pessoais</mat-list-item>
+          <mat-form-field>
+            <input formControlName="person_nome"      matInput name="personName"     placeholder="Nome"              class="form-control"  required >
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="person_cpf"       matInput name="personCpf"      placeholder="CPF"                 required mask="00/00/00 00:00:00">
+            <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['repeatedNumber'] == true">
+              CPF não pode ter todos os caracteres iguais
+            </mat-error>
+            <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['invalidCPF'] == true">
+              CPF digitádo não é valido
+            </mat-error>
+            <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['invalidLength'] == true">
+              CPF deve conter 11 números
+            </mat-error>
+            <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['validationFailed'] == true">
+              Dígito verificador do CPF inválido
+            </mat-error>
+            <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['invalidPattern'] == true">
+              Formato do CPF está incorreto. Digite apenas os números do CPF.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="person_ender"     matInput name="personEnder"    placeholder="Endereço"            required >
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="person_cep"       matInput name="personCep"      placeholder="CEP"                 required >
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="person_data_nasc" matInput name="personDataNasc" placeholder="Data de nascimento"  required >
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="person_sexo"      matInput name="personSexo"     placeholder="Sexo"                required >
+          </mat-form-field>
+          
+          <mat-divider></mat-divider>
+          <mat-list-item>Dados do Funcionário</mat-list-item>
+          
+          <mat-form-field>
+            <input formControlName="employee_salario" matInput name="employee.salario" placeholder="Salario" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="employee_pis" matInput name="employee.pis" placeholder="Pis" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="employee_cargo_cargo" matInput name="employee.cargo" placeholder="Cargo" required>
+          </mat-form-field>
+          
+          <div *ngIf="clienteDTO.employee.cargo.cargo != ''">
+            <mat-divider></mat-divider>
+            <mat-list-item>Dados Extras do Cargo de {{clienteDTO.employee.cargo.cargo}}</mat-list-item>
+          </div>
+
+        </mat-list>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="fazerCadastro()">{{!isEditing() ? "Cadastrar" : "Editar"}}</button>
+      <p *ngIf="isExternalRequest()" class="fazerCadastro"><small>Já tem um usuário ? Clique <a href="/" >aqui</a> para fazer Login.</small></p>
+    </mat-card-actions>
+  </mat-card>

@@ -1,43 +1,42 @@
 //modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ModulesRouterModule } from 'src/modules/modules-router.module';
+import { ModulesRouterModule } from 'src/SystemModules/modules-router.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //components
 import { AppComponent } from './app.component';
-import { LoginComponent } from 'src/modules/general/login/login.component';
-import { HeaderComponent } from '../modules/general/header/header.component';
-import { FooterComponent } from '../modules/general/footer/footer.component';
-import { BodyComponent } from '../modules/general/body/body.component';
 
 //imports material
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { GeneralInterceptor } from 'src/config/interceptor/general.interceptor';
+import { FormsModule } from '@angular/forms';
+import { HttpClientService } from 'src/config/httpclient/http.client.service';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from 'src/config/sharedmodules/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
-    BodyComponent,
-    LoginComponent,
+    
   ],
   imports: [
+    SharedModule,
     BrowserModule,
+    HttpClientModule,
     ModulesRouterModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatCardModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    HttpClientService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GeneralInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
