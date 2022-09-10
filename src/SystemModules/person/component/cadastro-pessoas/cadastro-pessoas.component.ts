@@ -13,13 +13,13 @@ import { Pharma } from 'src/SystemModules/person/model/pharma';
 import { Position } from 'src/SystemModules/person/model/position';
 import { PersonService } from 'src/SystemModules/person/service/person.service';
 import { PositionService } from 'src/SystemModules/person/service/position.service';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../../general/service/user.service';
 @Component({
   selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  templateUrl: './cadastro-pessoas.component.html',
+  styleUrls: ['./cadastro-pessoas.component.css']
 })
-export class CadastroComponent implements OnInit {
+export class CadastroPessoasComponent implements OnInit {
   //DTOS && Forms
   clienteDTO!:Person;
   clienteDTOForm!:FormGroup;

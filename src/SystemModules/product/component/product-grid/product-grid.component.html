@@ -1,26 +1,6 @@
-<mat-toolbar color="primary">
-    <div>
-        <button mat-icon-button>
-            <mat-icon aria-hidden="false" aria-label="home_icon" fontIcon="home" routerLink="/inicio"></mat-icon>
-        </button>
-    </div>
-    <div>
-        <button mat-button [matMenuTriggerFor]="menu" class="navigation-items">Menu</button>
-        <mat-menu #menu class="navigation-items">
-            <button mat-menu-item>Módulo de Pessoas</button>
-            <button mat-menu-item routerLink="/produtos">Módulo de Produtos</button>
-        </mat-menu>
-    </div>
-    <div>
-        <button mat-button [matMenuTriggerFor]="userMenu" class="navigation-items">Usuario</button>
-        <mat-menu #userMenu>
-            <menu mat-menu-item>Perfil</menu>
-            <menu mat-menu-item>Configurações</menu>
-        </mat-menu>
-    </div>
-  </mat-toolbar>
-
-
+<app-navbar></app-navbar>
+<br>
+<button mat-raised-button routerLink="/cadastroProdutos" color="primary">Cadastrar Produtos</button>
 <p>product-grid works!</p>
 
 

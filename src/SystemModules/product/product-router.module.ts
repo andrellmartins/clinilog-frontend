@@ -1,27 +1,19 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProductGridComponent } from './component/product-grid/product-grid.component';
+import { GeneralRouterModule } from '../general/general-router.module';
+import { SharedModule } from 'src/config/sharedmodules/shared.module';
 
 
-const routes: Routes = [
-  {
-    path:'product',
-    component:ProductGridComponent,
-    canActivateChild:[],
-    children:[
-      {
-        path:'',
-        component:ProductGridComponent
-      }
-    ]
-  }
-];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes),
+    GeneralRouterModule,
+    SharedModule
   ],
-  exports: [RouterModule]
+  exports: [
+
+  ],
+  declarations: [
+  ]
 })
 export class ProductRouterModule{ 
   
