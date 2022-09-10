@@ -15,11 +15,3 @@ a:hover, a:active{
     margin: 0;
 }
 
-
-
-/* não funcionando 
-#userMenu{
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-}*/

@@ -6,6 +6,9 @@ import { LoginComponent } from './component/login/login.component';
 import { LoginContainerComponent } from './component/login-container/login-container.component';
 import { SharedModule } from 'src/config/sharedmodules/shared.module';
 import { InicioComponent } from './component/inicio/inicio.component';
+import { ProductGridComponent } from '../product/component/product-grid/product-grid.component';
+import { NavbarComponent } from 'src/SystemModules/general/component/navbar/navbar.component';
+
 
 
 const routes: Routes = [
@@ -25,9 +28,13 @@ const routes: Routes = [
   },
   {
     path:'inicio',
-    component:InicioComponent,
-    canActivate:['funcionario']
+    component:InicioComponent, 
+    //canActivate:['funcionario']
   },
+  {
+    path:'produtos',
+    component:ProductGridComponent
+  }
 ];
 
 @NgModule({
@@ -36,15 +43,21 @@ const routes: Routes = [
   ],
   imports: [
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    
+    
   ],
   exports: [
     RouterModule,
+    
   ],
   declarations: [
     CadastroComponent,
     LoginComponent,
     LoginContainerComponent,
+    InicioComponent,
+    ProductGridComponent,
+    NavbarComponent,
   ]
 })
 export class GeneralRouterModule { }
