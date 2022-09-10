@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { PositionConstants } from 'src/config/constants/position.constants';
 import { FormValidator } from 'src/config/formvalidator/form-validator';
+import { User } from 'src/SystemModules/general/model/user';
 import { ClienteDTO } from 'src/SystemModules/person/dto/clienteDTO';
 import { Doctor } from 'src/SystemModules/person/model/doctor';
 import { Employee } from 'src/SystemModules/person/model/employee';
@@ -89,6 +90,7 @@ export class CadastroPessoasComponent implements OnInit {
 
   iniciarVariaveis(){
     this.clienteDTO = new Person();
+    this.clienteDTO.usuario = new User();
     this.clienteDTO.employee = new Employee;
     this.clienteDTO.employee.medico = new Doctor;
     this.clienteDTO.employee.farma  = new Pharma;
@@ -108,6 +110,11 @@ export class CadastroPessoasComponent implements OnInit {
       person_cep :        new FormControl('',[FormValidator.required,]),
       person_data_nasc :  new FormControl('',[FormValidator.required,]),
       person_sexo :       new FormControl('',[FormValidator.required,]),
+      
+      user_login :                  new FormControl('',[FormValidator.required,]),
+      user_password :               new FormControl('',[FormValidator.required,]),
+      user_password_confirmation :  new FormControl('',[FormValidator.required,]),
+      
       tipo_usuario:       new FormControl('',[FormValidator.required,]),
       employee_salario :  new FormControl('',[FormValidator.required,]),
       employee_pis :      new FormControl('',[FormValidator.required,]),
@@ -120,12 +127,17 @@ export class CadastroPessoasComponent implements OnInit {
 
     this.clienteDTOForm.valueChanges
     .subscribe((currentClienteDTOForm:any) => {
+        console.log(this.clienteDTOForm.get('user_password')?.value)
         this.clienteDTO.nome             =  currentClienteDTOForm?.person_nome;
         this.clienteDTO.cpf              =  currentClienteDTOForm?.person_cpf;
         this.clienteDTO.ender            =  currentClienteDTOForm?.person_ender;
         this.clienteDTO.cep              =  currentClienteDTOForm?.person_cep;
         this.clienteDTO.data_nasc        =  currentClienteDTOForm?.person_data_nasc;
         this.clienteDTO.sexo             =  currentClienteDTOForm?.person_sexo;
+        
+        this.clienteDTO.usuario.login    =  currentClienteDTOForm?.user_login;
+        this.clienteDTO.usuario.password =  currentClienteDTOForm?.user_password;
+        
         this.clienteDTO.employee.salario =  currentClienteDTOForm?.employee_salario;
         this.clienteDTO.employee.pis     =  currentClienteDTOForm?.employee_pis;
         this.clienteDTO.employee.cargo   =  currentClienteDTOForm?.employee_cargo;
@@ -159,6 +171,22 @@ export class CadastroPessoasComponent implements OnInit {
   
   isPharma():boolean{
     return this.clienteDTO.employee.cargo.id == PositionConstants.PHARMA_ID;
+  }
+
+  isSenhaSenhaDiferente = ():boolean => {
+    if(this.clienteDTOForm == null){
+      return false
+    }
+    const senhasDiferentes = this.clienteDTOForm.get('user_password')?.value !== '' 
+      && this.clienteDTOForm.get('user_password_confirmation')?.value !== '' 
+      && this.clienteDTOForm.get('user_password')?.value !== this.clienteDTOForm.get('user_password_confirmation')?.value
+
+    this.clienteDTOForm.get('user_password_confirmation')?.setErrors(
+      !senhasDiferentes ? null : {senhasDiferentes:true}
+    )
+    
+    return senhasDiferentes;
+
   }
 
   swalServiceClose = () => {};
