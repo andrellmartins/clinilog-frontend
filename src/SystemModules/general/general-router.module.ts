@@ -8,6 +8,7 @@ import { SharedModule } from 'src/config/sharedmodules/shared.module';
 import { InicioComponent } from './component/inicio/inicio.component';
 import { ProductGridComponent } from '../product/component/product-grid/product-grid.component';
 import { NavbarComponent } from 'src/SystemModules/general/component/navbar/navbar.component';
+import { PersonService } from '../person/service/person.service';
 
 
 
@@ -40,6 +41,7 @@ const routes: Routes = [
 @NgModule({
   providers:[
     UserService,
+    PersonService
   ],
   imports: [
     RouterModule.forChild(routes),

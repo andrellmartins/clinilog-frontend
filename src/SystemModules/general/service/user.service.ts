@@ -3,6 +3,7 @@ import { User } from '../model/user';
 import { HttpClientService } from 'src/config/httpclient/http.client.service';
 import { ClienteDTO } from 'src/SystemModules/person/dto/clienteDTO';
 import { catchError, map, Observable, of } from 'rxjs';
+import { Person } from 'src/SystemModules/person/model/person';
 
 
 @Injectable({
@@ -45,7 +46,7 @@ export class UserService {
     );
   }
 
-  consultarUsuario(nrUsr: number): Observable<ClienteDTO> {
+  consultarUsuario(nrUsr: number): Observable<Person> {
     return this.httpClient.get('/user',{nrUser: nrUsr});
   }
 }

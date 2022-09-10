@@ -40,7 +40,14 @@
           <mat-form-field>
             <input formControlName="person_sexo"      matInput name="personSexo"     placeholder="Sexo"                required >
           </mat-form-field>
-          
+          <mat-form-field>
+            <mat-label>Tipo de Usuário </mat-label>
+            <mat-select formControlName="tipo_usuario" name="user.type" >
+              <mat-option value="funcionario">Funcionario</mat-option>
+              <mat-option value="paciente">Paciente</mat-option>
+            </mat-select>
+          </mat-form-field>
+<ng-container *ngIf="clienteDTOForm.get('tipo_usuario')?.value == 'funcionario'">
           <mat-divider></mat-divider>
           <mat-list-item>Dados do Funcionário</mat-list-item>
           
@@ -51,16 +58,36 @@
             <input formControlName="employee_pis" matInput name="employee.pis" placeholder="Pis" required>
           </mat-form-field>
           <mat-form-field>
-            <input formControlName="employee_cargo_cargo" matInput name="employee.cargo" placeholder="Cargo" required>
+            <mat-label>Cargo </mat-label>
+            <mat-select formControlName="employee_cargo" name="employee.cargo" >
+              <mat-option *ngFor="let position of positionsList" [value]="position">{{position.cargo}}</mat-option>
+            </mat-select>
           </mat-form-field>
-          
-          <div *ngIf="clienteDTO.employee.cargo.cargo != ''">
-            <mat-divider></mat-divider>
-            <mat-list-item>Dados Extras do Cargo de {{clienteDTO.employee.cargo.cargo}}</mat-list-item>
-          </div>
+  <ng-container *ngIf="isMedic() || isPharma()">
+          <mat-divider></mat-divider>
+          <mat-list-item>Dados Extras do Cargo de {{clienteDTO.employee.cargo.cargo}}</mat-list-item>
+    <ng-container *ngIf="isMedic()">
+          <mat-form-field>
+            <input formControlName="medic_crm" matInput name="medic.crm" placeholder="CRM" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="medic_crm_uf" matInput name="medic.crm.uf" placeholder="UF CRM" required>
+          </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="isPharma()">
+          <mat-form-field>
+            <input formControlName="pharma_crf" matInput name="pharma.crf" placeholder="CRF" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="pharma_crf_uf" matInput name="pharma.crf.uf" placeholder="UF CRF" required>
+          </mat-form-field>
+    </ng-container>
+  </ng-container>
+</ng-container>
+<ng-container *ngIf="clienteDTOForm.get('tipo_usuario')?.value == 'paciente'">
 
+</ng-container>
         </mat-list>
-
       </form>
     </mat-card-content>
     <mat-card-actions>
@@ -68,3 +95,11 @@
       <p *ngIf="isExternalRequest()" class="fazerCadastro"><small>Já tem um usuário ? Clique <a href="/" >aqui</a> para fazer Login.</small></p>
     </mat-card-actions>
   </mat-card>
+
+<swal #swalService
+ [text] = "swalService.text" 
+ [titleText] = "swalService.titleText" 
+ [icon] = "swalService.icon" 
+ (didClose) = "swalServiceClose()" 
+ >
+</swal>

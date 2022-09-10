@@ -9,7 +9,7 @@ export class HttpClientService{
     ){
 
     }
-    public get(url:string, params:any){
+    public get(url:string, params?:any){
         return this.httpClient.get(
             url,
             {
@@ -34,7 +34,8 @@ export class HttpClientService{
     }
     public headers():HttpHeaders{
         let headers: HttpHeaders = new HttpHeaders();
-        headers = headers.append('Content-type', 'application/json');
+        headers = headers
+            .set('Content-type', 'application/json')
         return headers;
     }
 
