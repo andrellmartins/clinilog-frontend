@@ -10,6 +10,7 @@ import { ProductGridComponent } from '../product/component/product-grid/product-
 import { PersonGridComponent } from '../person/component/person-grid/person-grid.component';
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { CadastroProdutosComponent } from '../product/component/cadastro-produtos/cadastro-produtos.component';
+import { PersonService } from '../person/service/person.service';
 
 
 
@@ -22,6 +23,10 @@ const routes: Routes = [
         path:'',
         component:LoginComponent
       },
+      {
+        path:'cadastroPessoas',
+        component:CadastroPessoasComponent
+      }
     ]
   },
   {
@@ -39,11 +44,8 @@ const routes: Routes = [
   {
     path:"cadastroProdutos",
     component:CadastroProdutosComponent
-  },
-  {
-    path:'cadastroPessoas',
-    component:CadastroPessoasComponent
   }
+
 ];
 
 @NgModule({
@@ -52,7 +54,7 @@ const routes: Routes = [
     PersonService
   ],
   imports: [
-    RouterModule.forChild(routes),
+    RouterModule.forRoot(routes),
     SharedModule,
     
     
