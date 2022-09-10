@@ -17,7 +17,9 @@ import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    
+  ],
   imports:[
     SweetAlert2Module.forRoot(),
   ],
@@ -37,7 +39,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
   ]
 })
 export class SharedModule { }

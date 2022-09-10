@@ -6,14 +6,14 @@ import { Employee } from 'src/SystemModules/person/model/employee';
 import { Patient } from 'src/SystemModules/person/model/patient';
 import { Person } from 'src/SystemModules/person/model/person';
 import { Position } from 'src/SystemModules/person/model/position';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../../general/service/user.service';
 
 @Component({
   selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css']
+  templateUrl: './cadastro-pessoas.component.html',
+  styleUrls: ['./cadastro-pessoas.component.css']
 })
-export class CadastroComponent implements OnInit {
+export class CadastroPessoasComponent implements OnInit {
 
   clienteDTO!:ClienteDTO;
   clienteDTOForm!:FormGroup;

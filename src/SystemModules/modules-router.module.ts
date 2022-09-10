@@ -8,6 +8,7 @@ import { GeneralRouterModule } from './general/general-router.module';
 @NgModule({
   exports:[
     CommonModule,
+    
   ],
   imports:[
     GeneralRouterModule,
