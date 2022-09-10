@@ -12,6 +12,7 @@ export class Product  {
     public deletado!:boolean;
     public lote!:Batch[];
     public medicamento!:Medicine;
+  
 
     static initializeWithJson(jsonstring:string):Product{
         return Object.assign(new Product,JSON.parse(jsonstring));

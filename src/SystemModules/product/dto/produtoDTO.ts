@@ -5,6 +5,5 @@ import { Batch } from "../model/batch";
 export class ProductDTO{
     product!:Product;
     medicine!:Medicine;
-    batch!:Batch;
     
 }
