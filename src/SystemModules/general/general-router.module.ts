@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { UserService } from './service/user.service';
 import { CadastroPessoasComponent } from '../person/component/cadastro-pessoas/cadastro-pessoas.component';
 import { LoginComponent } from './component/login/login.component';
@@ -11,42 +11,7 @@ import { PersonGridComponent } from '../person/component/person-grid/person-grid
 import { NavbarComponent } from './component/navbar/navbar.component';
 import { CadastroProdutosComponent } from '../product/component/cadastro-produtos/cadastro-produtos.component';
 import { PersonService } from '../person/service/person.service';
-
-
-
-const routes: Routes = [
-  {
-    path:'',
-    component:LoginContainerComponent,
-    children:[
-      {
-        path:'',
-        component:LoginComponent
-      },
-      {
-        path:'cadastroPessoas',
-        component:CadastroPessoasComponent
-      }
-    ]
-  },
-  {
-    path:'inicio',
-    component:InicioComponent
-  },
-  {
-    path:'produtos',
-    component:ProductGridComponent
-  },
-  {
-    path:"pessoas",
-    component:PersonGridComponent
-  },
-  {
-    path:"cadastroProdutos",
-    component:CadastroProdutosComponent
-  }
-
-];
+import { HomeComponent } from './component/home/home.component';
 
 @NgModule({
   providers:[
@@ -54,10 +19,7 @@ const routes: Routes = [
     PersonService
   ],
   imports: [
-    RouterModule.forRoot(routes),
     SharedModule,
-    
-    
   ],
   exports: [
     RouterModule,
@@ -71,7 +33,8 @@ const routes: Routes = [
     ProductGridComponent,
     PersonGridComponent,
     NavbarComponent,
-    CadastroProdutosComponent
+    CadastroProdutosComponent,
+    HomeComponent
   ]
 })
 export class GeneralRouterModule { }

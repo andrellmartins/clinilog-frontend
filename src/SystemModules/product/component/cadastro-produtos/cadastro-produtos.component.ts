@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { FormValidator } from 'src/config/formvalidator/form-validator';
 import { ProductService } from 'src/SystemModules/general/service/product.service';
 import { ProductDTO } from '../../dto/produtoDTO';
 import { Batch } from '../../model/batch';
@@ -23,7 +24,11 @@ export class CadastroProdutosComponent implements OnInit {
   constructor(
     private productService:ProductService,
   ) {
-    
+    this.productDTOForm = new FormGroup({
+      product_descricao: new FormControl('',[FormValidator.required,]),
+      tipo_produto: new FormControl('',[FormValidator.required,]),
+      med_principio: new FormControl('',[FormValidator.required,]),
+    });
    }
 
   ngOnInit(): void {

@@ -11,6 +11,8 @@ export class InicioComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // TODO document why this method 'ngOnInit' is empty
+  
   }
 
 }
