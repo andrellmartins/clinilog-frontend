@@ -1,6 +1,30 @@
 <button mat-raised-button routerLink="cadastro" color="primary">Cadastrar Produtos</button>
-<p>product-grid works!</p>
 
+<section tabindex="0">
+    <table mat-table [width]="'100%'" [dataSource]=produtos>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef> Descrição </th>
+        <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="isMed">
+        <th mat-header-cell *matHeaderCellDef> Tipo de Produto </th>
+        <td mat-cell *matCellDef="let element"> {{element.isMed ?"Medicamento":"Insumo"}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="data_cadastro">
+        <th mat-header-cell *matHeaderCellDef> Data de Cadastro </th>
+        <td mat-cell *matCellDef="let element"> {{element.data_cadastro}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="productColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: productColumns;"></tr>
+    </table>
+</section>
 
 
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/user';
+import { User } from '../../general/model/user';
 import { HttpClientService } from 'src/config/httpclient/http.client.service';
 import { catchError, map, Observable, of } from 'rxjs';
-import { UserService } from './user.service';
+import { UserService } from '../../general/service/user.service';
 import { ProductDTO } from 'src/SystemModules/product/dto/produtoDTO';
+import { Product } from '../model/product';
 
 
 @Injectable({
@@ -26,7 +27,11 @@ export class ProductService {
   ) {}
 
   
-  consultarProduto(nrPrd: number): Observable<ProductDTO> {
-    return this.httpClient.get('/prod',{nrPrd: nrPrd});
+  public consultaProduto(): Observable<Product[]> {
+    return this.httpClient.get('/product/');
+  }
+
+  public cadastrarProduto(productDTO:Product):Observable<Product>{
+    return this.httpClient.post('/product/',productDTO);
   }
 }

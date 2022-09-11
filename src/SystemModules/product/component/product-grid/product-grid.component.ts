@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProductService } from 'src/SystemModules/product/service/product.service';
+import { Product } from '../../model/product';
 
 
 @Component({
@@ -8,9 +10,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductGridComponent implements OnInit {
 
-  constructor() { }
+  public produtos!:Product[];
+
+  public productColumns = [
+    'descricao',
+    'isMed',
+    'data_cadastro',
+  ];
+
+  constructor( private productService:ProductService) { }
 
   ngOnInit(): void {
+    this.carregarProdutos();
+  }
+
+  carregarProdutos(){
+    this.productService.consultaProduto()
+    .subscribe({
+      next: (produtos:Product[]) => {
+        this.produtos = produtos;
+      },
+      error(err) {
+          console.log(err)
+      },
+    })
   }
 
 }
