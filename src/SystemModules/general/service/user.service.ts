@@ -4,6 +4,7 @@ import { HttpClientService } from 'src/config/httpclient/http.client.service';
 import { ClienteDTO } from 'src/SystemModules/person/dto/clienteDTO';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Person } from 'src/SystemModules/person/model/person';
+import { HttpResponse } from '@angular/common/http';
 
 
 @Injectable({
@@ -20,6 +21,9 @@ export class UserService {
       return User.initializeWithJson(userString);
     }
   }
+  private setCurrentUser(user:User): void {
+    localStorage.setItem(UserService.currentUserToken, JSON.stringify(user))
+  }
 
   constructor(
     private httpClient: HttpClientService
@@ -31,15 +35,8 @@ export class UserService {
       usuario
     ).pipe(
       map(
-        (response:any):User => {
-          console.log(response);
-          if(response.status == 200 &&  response.headers.get("Authorization")?.includes("Bearer ") && response.body != null){
-            response.json().then(
-              (user:User) =>{
-                localStorage.setItem(UserService.currentUserToken, JSON.stringify(user));
-              }
-            )
-          }
+        (response:User):User => {
+          this.setCurrentUser(response)
           return UserService.getCurrentUser();
         }
       )

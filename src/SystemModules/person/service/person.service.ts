@@ -16,4 +16,7 @@ export class PersonService {
   public cadastrarUsuario(clienteDTO:Person):Observable<Person>{
     return this.httpClient.post('/person/',clienteDTO);
   }
+  public consultaPessoas():Observable<Person[]>{
+    return this.httpClient.get('/person/');
+  }
 }

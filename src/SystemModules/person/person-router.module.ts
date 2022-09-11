@@ -22,7 +22,7 @@ export const personRoutes: Routes = [
 @NgModule({
   providers:[
     PersonService,
-    HttpClientService
+    HttpClientService,
   ],
   declarations: [],
   imports: [

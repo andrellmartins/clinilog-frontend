@@ -20,7 +20,6 @@ export class HttpClientService{
     }
 
     public post(url:string, params:any){
-        console.log(JSON.stringify(params ? params : {}));
         return this.httpClient.post(
             url,
             {...(params ? params : {})},
@@ -28,10 +27,10 @@ export class HttpClientService{
                 headers:this.headers()
             }
         ).pipe(map((response:any) => {
-            console.log(response) 
             return response
         }));
     }
+
     public headers():HttpHeaders{
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers

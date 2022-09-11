@@ -24,11 +24,9 @@ export class LoginComponent implements OnInit {
   }
 
   fazerLogin(){
-    console.log("Login Using",this.usuario);
     this.userService.login(this.usuario)
     .subscribe({
       next:(user:any) => {
-        console.log(user);
         this.swalService.titleText = 'Login feito com sucesso';
         this.swalService.text = user.firstName;
         this.swalService.icon = "success";

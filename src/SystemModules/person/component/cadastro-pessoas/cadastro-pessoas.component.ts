@@ -127,7 +127,6 @@ export class CadastroPessoasComponent implements OnInit {
 
     this.clienteDTOForm.valueChanges
     .subscribe((currentClienteDTOForm:any) => {
-        console.log(this.clienteDTOForm.get('user_password')?.value)
         this.clienteDTO.nome             =  currentClienteDTOForm?.person_nome;
         this.clienteDTO.cpf              =  currentClienteDTOForm?.person_cpf;
         this.clienteDTO.ender            =  currentClienteDTOForm?.person_ender;
@@ -156,7 +155,7 @@ export class CadastroPessoasComponent implements OnInit {
     try{
       return UserService.getCurrentUser().id == null
     }catch(e){
-      console.log( e )
+      console.log(e)
     }
     return true
   }
