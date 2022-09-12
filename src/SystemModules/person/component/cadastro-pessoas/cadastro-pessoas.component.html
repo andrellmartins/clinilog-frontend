@@ -1,5 +1,5 @@
 <mat-card >
-    <mat-card-header>
+    <mat-card-header *ngIf="this.isExternalRequest()">
       <mat-card-title>CliniLog</mat-card-title>
       <mat-card-subtitle>Cadastro</mat-card-subtitle>
     </mat-card-header>
@@ -76,7 +76,7 @@
               <mat-option *ngFor="let position of positionsList" [value]="position">{{position.cargo}}</mat-option>
             </mat-select>
           </mat-form-field>
-  <ng-container *ngIf="isMedic() || isPharma()">
+  <ng-container *ngIf="(isMedic() || isPharma()) && clienteDTO.employee!== undefined ">
           <mat-divider></mat-divider>
           <mat-list-item>Dados Extras do Cargo de {{clienteDTO.employee.cargo.cargo}}</mat-list-item>
     <ng-container *ngIf="isMedic()">
@@ -103,7 +103,7 @@
         </mat-list>
       </form>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="!isVisualizar()">
       <button mat-raised-button color="primary" (click)="fazerCadastro()">{{!isEditing() ? "Cadastrar" : "Editar"}}</button>
       <p *ngIf="isExternalRequest()" class="fazerCadastro"><small>Já tem um usuário ? Clique <a href="/" >aqui</a> para fazer Login.</small></p>
     </mat-card-actions>

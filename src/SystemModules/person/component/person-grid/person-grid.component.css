@@ -1,0 +1,17 @@
+section{
+    display: block;
+    width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    position: relative;
+    max-height: 400px;
+}
+.inline-block{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}

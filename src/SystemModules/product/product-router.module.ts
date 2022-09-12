@@ -13,6 +13,10 @@ export const productRoutes:Routes = [
   {
     path:'cadastro',
     component:CadastroProdutosComponent,
+  },
+  {
+    path:'cadastro/:path/:nrUsr',
+    component:CadastroProdutosComponent,
   }
 ]
 

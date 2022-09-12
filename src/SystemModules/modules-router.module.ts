@@ -9,6 +9,7 @@ import { CadastroPessoasComponent } from './person/component/cadastro-pessoas/ca
 import { InicioComponent } from './general/component/inicio/inicio.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './general/component/home/home.component';
+import { UserService } from './general/service/user.service';
 
 const routes: Routes = [
   {

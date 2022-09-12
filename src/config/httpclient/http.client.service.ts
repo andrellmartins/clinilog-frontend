@@ -30,6 +30,28 @@ export class HttpClientService{
             return response
         }));
     }
+    
+    public put(url:string, params:any){
+        return this.httpClient.put(
+            url,
+            {...(params ? params : {})},
+            {
+                headers:this.headers()
+            }
+        ).pipe(map((response:any) => {
+            return response
+        }));
+    }
+    
+    public delete(url:string, params?:any){
+        return this.httpClient.delete(
+            url,
+            {
+                ...(!!params ? {params} : {}),
+                headers:this.headers()
+            }
+        ).pipe(map((response:any) => response));
+    }
 
     public headers():HttpHeaders{
         let headers: HttpHeaders = new HttpHeaders();

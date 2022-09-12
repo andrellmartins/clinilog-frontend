@@ -12,8 +12,8 @@ export class Person {
     public data_nasc!:string;
     public sexo!:string;
     public deletado!:boolean;
-    public employee!:Employee;
-    public paciente!:Patient;
+    public employee?:Employee;
+    public paciente?:Patient;
     public usuario!:User;
     
     static initializeWithJson(jsonString:string):Person{

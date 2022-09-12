@@ -8,6 +8,12 @@ import { Person } from '../model/person';
   providedIn: 'root'
 })
 export class PersonService {
+  editarUsuario(clienteDTO: Person): Observable<Person>{
+    return this.httpClient.put('/person/',clienteDTO);
+  }
+  excluirPessoa(idPerson: number):Observable<boolean>{
+    return this.httpClient.delete('/person/'+idPerson);
+  }
 
   constructor(
     private httpClient:HttpClientService
@@ -16,6 +22,10 @@ export class PersonService {
   public cadastrarUsuario(clienteDTO:Person):Observable<Person>{
     return this.httpClient.post('/person/',clienteDTO);
   }
+  public consultaPessoa(idPessoa:number):Observable<Person>{
+    return this.httpClient.get('/person/'+idPessoa);
+  }
+
   public consultaPessoas():Observable<Person[]>{
     return this.httpClient.get('/person/');
   }

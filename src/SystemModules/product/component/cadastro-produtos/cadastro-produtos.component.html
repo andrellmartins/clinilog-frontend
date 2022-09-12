@@ -21,3 +21,11 @@
 </form>
 </mat-list>
 <button mat-raised-button color="primary" (click)="fazerCadastroProdutos()">Salvar</button>
+
+<swal #swalService
+  [text] = "swalService.text" 
+  [titleText] = "swalService.titleText" 
+  [icon] = "swalService.icon" 
+  (didClose) = "swalServiceClose()" 
+>
+</swal>

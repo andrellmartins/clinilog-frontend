@@ -16,6 +16,10 @@ export const personRoutes: Routes = [
   {
     path:'cadastrar',
     component:CadastroPessoasComponent
+  },
+  {
+    path:'cadastrar/:acao/:nrUsr',
+    component:CadastroPessoasComponent
   }
 ];
 

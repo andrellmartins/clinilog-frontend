@@ -15,11 +15,12 @@ export class PersonGridComponent implements OnInit {
     'nome',
     'cpf',
     'data_nasc',
+    'acoes'
   ];
   
 
   constructor(
-    private personService:PersonService
+    private personService:PersonService,
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +37,20 @@ export class PersonGridComponent implements OnInit {
           console.log(err)
       },
     })
+  }
+
+  excluirPerson(idPerson:number){
+    const confirm:boolean  = window.confirm("Tem certeza que deseja deletar um usuário ?");
+    if(confirm){
+      this.personService.excluirPessoa(idPerson).subscribe({
+        next:(message:boolean) => {
+          if(message){
+            alert('Pessoa Deletada do Sistema')
+            this.carregarPessoas();
+          }
+        }
+      });
+    }
   }
 
 }

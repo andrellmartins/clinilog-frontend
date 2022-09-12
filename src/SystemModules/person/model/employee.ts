@@ -10,8 +10,8 @@ export class Employee {
     public salario!:number;
     public pessoa!:Person;
     public cargo!:Position;
-    public medico!:Doctor;
-    public farma!:Pharma;
+    public medico?:Doctor;
+    public farma?:Pharma;
 
     static initializeWithJson(jsonstring:string):Employee{
         return Object.assign(new Employee,JSON.parse(jsonstring));

@@ -5,6 +5,7 @@ import { ClienteDTO } from 'src/SystemModules/person/dto/clienteDTO';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Person } from 'src/SystemModules/person/model/person';
 import { HttpResponse } from '@angular/common/http';
+import { getCurrencySymbol } from '@angular/common';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { HttpResponse } from '@angular/common/http';
 export class UserService {
   static readonly currentUserToken = 'currentUser';
 
-  static getCurrentUser(): User {
+  static getCurrentUser(): User | null {
     const userString:string|null = localStorage.getItem(UserService.currentUserToken);
     if(userString == null){
       return new User;
@@ -37,7 +38,7 @@ export class UserService {
       map(
         (response:User):User => {
           this.setCurrentUser(response)
-          return UserService.getCurrentUser();
+          return response;
         }
       )
     );

@@ -52,11 +52,13 @@ export class CadastroProdutosComponent implements OnInit {
     this.productDTOForm.valueChanges
     .subscribe((currentProductDTOForm:any) => {
         this.productDTO.descricao =  currentProductDTOForm?.product_descricao;
-        if(this.isMed()){
-          console.log(this.productDTO)
-          this.productDTO.isMed  =  this.isMed();
+        this.productDTO.isMed  =  this.isMed();
+        if(this.productDTO.isMed){
           this.productDTO.medicamento.principio_ativo = currentProductDTOForm?.med_principio;
+        }else{
+          this.productDTO.medicamento = new Medicine();
         }
+        console.log(this.productDTO);
     });
   }
   isMed() {
@@ -68,13 +70,19 @@ export class CadastroProdutosComponent implements OnInit {
     .subscribe({
       next:(product:Product) => {
         this.swalService.titleText = "Sucesso ao Cadastrar";
-        this.swalService.text = "Bem vindo ao CliniLog " + product.descricao + " !";
+        this.swalService.text = "Novo Produto " + product.descricao + " Cadastrado!";
         this.swalService.icon = "success";
         this.swalServiceClose = () => {
-          window.location.href = '';
+          window.location.href = '/inicio/produtos/';
         }
         this.swalService.fire();
-
+      },
+      error:(err:Error) => {
+        this.swalService.titleText = "Falha ao Cadastrar";
+        this.swalService.text = "Produto " + this.productDTO.descricao + " Não foi Cadastrado! \n Mensagem:" + err.message;
+        this.swalService.icon = "error";
+        this.swalServiceClose = () => {}
+        this.swalService.fire();
       }
     });
   }

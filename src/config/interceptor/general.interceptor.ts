@@ -4,14 +4,22 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpResponse
+  HttpResponse,
+  HttpHeaderResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
-import {  map, Observable, tap } from 'rxjs';
+import {  catchError, map, Observable, tap } from 'rxjs';
+import { UserService } from 'src/SystemModules/general/service/user.service';
+import { User } from 'src/SystemModules/general/model/user';
 
 @Injectable()
 export class GeneralInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor(
+    private userService:UserService
+  ) {}
+
+  private readonly server_url = 'http://127.0.0.1:8080'; 
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     request = this.beforeRequest(request);
@@ -27,7 +35,7 @@ export class GeneralInterceptor implements HttpInterceptor {
       setHeaders.Authorization = bearer;
     }
     return request.clone({
-      url:'http://127.0.0.1:8080' + request.url,
+      url:this.server_url + request.url,
       setHeaders:setHeaders
     });
   }
@@ -39,9 +47,32 @@ export class GeneralInterceptor implements HttpInterceptor {
           const authorizationHeader:string|null = response.headers.get('authorization');
           if(authorizationHeader != null && authorizationHeader.includes('Bearer')){
             this.setBearerToken(authorizationHeader)
+            if(typeof response.body == 'string' && response.body != ''){
+              localStorage.setItem(UserService.currentUserToken, response.body);
+            }
           }
         }
         return response;
+      }),
+      catchError((err:any, caught:Observable<HttpEvent<unknown>>) => {
+        if(err instanceof HttpErrorResponse && err.status == 403 && err.url !== this.server_url + '/login'){
+          const currentUser:User|null = UserService.getCurrentUser();
+          if(currentUser == null){
+            return caught;
+          }
+          this.userService.login(currentUser).subscribe({
+            next(value) {
+                confirm('Tentar Novamente Por Favor.')
+            },
+            error(err) {
+                confirm('Seu Login expirou!');
+                localStorage.clear();
+                window.location.href='/';
+            },
+          });
+          
+        }
+        throw caught;
       })
     )
   }
