@@ -8,9 +8,10 @@ import {
   HttpHeaderResponse,
   HttpErrorResponse
 } from '@angular/common/http';
-import {  catchError, map, Observable, tap } from 'rxjs';
+import {  catchError, map, Observable, of, tap } from 'rxjs';
 import { UserService } from 'src/SystemModules/general/service/user.service';
 import { User } from 'src/SystemModules/general/model/user';
+import { UrlTree } from '@angular/router';
 
 @Injectable()
 export class GeneralInterceptor implements HttpInterceptor {
@@ -24,7 +25,8 @@ export class GeneralInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     request = this.beforeRequest(request);
     return this.afterRequest(
-      next.handle(request)
+      next.handle(request),
+      request
     );
   }
 
@@ -32,7 +34,7 @@ export class GeneralInterceptor implements HttpInterceptor {
     const bearer:string|null = this.getBearerToken();
     let setHeaders:any = {}
     if(bearer !== null){
-      setHeaders.Authorization = bearer;
+      setHeaders.authorization = bearer;
     }
     return request.clone({
       url:this.server_url + request.url,
@@ -40,41 +42,60 @@ export class GeneralInterceptor implements HttpInterceptor {
     });
   }
   
-  afterRequest(response:Observable<HttpEvent<unknown>>):Observable<HttpEvent<unknown>>{
-    return response.pipe(
-      tap((response:HttpEvent<unknown>) => {
-        if(response instanceof HttpResponse){
-          const authorizationHeader:string|null = response.headers.get('authorization');
-          if(authorizationHeader != null && authorizationHeader.includes('Bearer')){
-            this.setBearerToken(authorizationHeader)
-            if(typeof response.body == 'string' && response.body != ''){
-              localStorage.setItem(UserService.currentUserToken, response.body);
+  afterRequest(
+    response:Observable<HttpEvent<unknown>>, 
+    request:HttpRequest<unknown>
+  ):Observable<HttpEvent<unknown>>{
+      return response.pipe(
+        tap((response:HttpEvent<unknown>) => {
+          if(response instanceof HttpResponse){
+            const authorizationHeader:string|null = response.headers.get('authorization');
+            if(authorizationHeader != null && authorizationHeader.includes('Bearer')){
+              console.log(request);
+              if(  response.body instanceof Object
+                && request instanceof Object 
+                && request.body instanceof Object 
+              ){
+                console.log(request.body)
+                let updatedUser:User = new User(response.body);
+                updatedUser.password = new User(request.body).password
+                this.setBearerToken(authorizationHeader)
+                UserService.setCurrentUser(updatedUser);
+              }
             }
           }
-        }
-        return response;
-      }),
-      catchError((err:any, caught:Observable<HttpEvent<unknown>>) => {
-        if(err instanceof HttpErrorResponse && err.status == 403 && err.url !== this.server_url + '/login'){
-          const currentUser:User|null = UserService.getCurrentUser();
-          if(currentUser == null){
-            throw err;
+          console.log(response, UserService.getCurrentUser())
+          return response;
+        }),
+        catchError((err:any, caught:Observable<HttpEvent<unknown>>) => {
+          console.log(err)
+          if(err instanceof HttpErrorResponse && err.status == 403 && err.url !== this.server_url + '/login'){
+            const currentUser:User|null = UserService.getCurrentUser();
+            console.log(currentUser);
+            if(currentUser == null){
+              throw err;
+            }
+            return this.userService.login(currentUser).pipe(
+              map((user:User) => {
+                UserService.setCurrentUser(user);
+                throw new Error("Sessão Perdida e Restaurada");
+              }),
+              catchError((err:Error) => {
+                  if(err.message.includes("Sessão Perdida e Restaurada")){
+                    window.location.reload();
+                    throw err;
+                  }
+                  confirm('Seu Login expirou!');
+                  console.log("Sessão Limpa")
+                  localStorage.clear();
+                  window.location.href='/';
+                  throw err;
+              }),
+            );
           }
-          this.userService.login(currentUser).subscribe({
-            next(value) {
-                confirm('Tentar Novamente Por Favor.')
-            },
-            error(err) {
-                confirm('Seu Login expirou!');
-                localStorage.clear();
-                window.location.href='/';
-            },
-          });
-          
-        }
-        throw err;
-      }) 
-    )
+          throw err;
+        }) 
+      )
   }
 
   getBearerToken():string|null{

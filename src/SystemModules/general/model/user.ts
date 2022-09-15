@@ -11,7 +11,13 @@ export class User{
     public dtCreation!:Date;
     public dtUpdate!:Date;
     public pessoa!:Person;
-    
+
+    constructor(userObj?:Object){
+        if(userObj != null){
+            return Object.assign(new User,userObj);
+        }
+    }
+
     static initializeWithJson(jsonstring:string):User{
         return Object.assign(new User,JSON.parse(jsonstring));
     }

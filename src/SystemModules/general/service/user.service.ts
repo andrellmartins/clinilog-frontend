@@ -23,7 +23,7 @@ export class UserService {
     }
   }
   
-  private setCurrentUser(user:User): void {
+  static setCurrentUser(user:User): void {
     localStorage.setItem(UserService.currentUserToken, JSON.stringify(user))
   }
 
@@ -35,14 +35,6 @@ export class UserService {
     return this.httpClient.post(
       '/login', 
       usuario
-    ).pipe(
-      map(
-        (response:User):User => {
-          response.password = usuario.password;
-          this.setCurrentUser(response)
-          return response;
-        }
-      )
     );
   }
 

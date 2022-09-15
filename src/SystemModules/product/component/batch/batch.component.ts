@@ -18,4 +18,11 @@ export class BatchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isNovo():boolean{
+    return this.batch == null 
+        || this.batch == undefined 
+        || this.batch.id == null
+        || this.batch.id == undefined
+  }
+
 }
