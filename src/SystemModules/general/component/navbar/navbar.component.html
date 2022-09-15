@@ -14,7 +14,7 @@
     <div id="userMenu">
         <button mat-button [matMenuTriggerFor]="userMenu" class="navigation-items">Usuario</button>
         <mat-menu #userMenu>
-            <menu mat-menu-item>Perfil</menu>
+            <menu mat-menu-item routerLink="profile">Perfil</menu>
             <menu mat-menu-item>Configurações</menu>
             <menu mat-menu-item (click)="logout()">Sair</menu>
         </mat-menu>

@@ -36,7 +36,7 @@ import { BatchComponent } from '../product/component/batch/batch.component';
     NavbarComponent,
     CadastroProdutosComponent,
     HomeComponent,
-    BatchComponent
+    BatchComponent,
   ]
 })
 export class GeneralRouterModule { }

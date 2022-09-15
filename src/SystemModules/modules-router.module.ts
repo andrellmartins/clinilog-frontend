@@ -10,6 +10,7 @@ import { InicioComponent } from './general/component/inicio/inicio.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './general/component/home/home.component';
 import { UserService } from './general/service/user.service';
+import { ProfileComponent } from './person/component/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
         path:"pessoas",
         children:personRoutes
       },
+      {
+        path:'profile',
+        component:ProfileComponent
+      }
     ]
   }
 
@@ -51,12 +56,16 @@ const routes: Routes = [
   exports:[
     CommonModule,
     
+    
   ],
+  declarations: [],
   imports:[
     RouterModule.forRoot(routes),
     GeneralRouterModule,
     ProductRouterModule,
     PersonRouterModule,
+    
+    
   ]
 
 })
