@@ -2,19 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClienteDTO } from 'src/SystemModules/person/dto/clienteDTO';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Person } from '../../model/person';
+import { Person } from '../../../person/model/person';
 import { PositionConstants } from 'src/config/constants/position.constants';
-import { Pharma } from '../../model/pharma';
-import { Employee } from '../../model/employee';
-import { Doctor } from '../../model/doctor';
+import { Pharma } from '../../../person/model/pharma';
+import { Employee } from '../../../person/model/employee';
+import { Doctor } from '../../../person/model/doctor';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Position } from '../../model/position';
+import { Position } from '../../../person/model/position';
 import { ActivatedRoute } from '@angular/router';
-import { PositionService } from '../../service/position.service';
+import { PositionService } from '../../../person/service/position.service';
 import { UserService } from 'src/SystemModules/general/service/user.service';
-import { PersonService } from '../../service/person.service';
+import { PersonService } from '../../../person/service/person.service';
 import { User } from 'src/SystemModules/general/model/user';
-import { Patient } from '../../model/patient';
+import { Patient } from '../../../person/model/patient';
 import { FormValidator } from 'src/config/formvalidator/form-validator';
 
 @Component({
@@ -28,20 +28,19 @@ export class ProfileComponent implements OnInit {
     clienteDTO!:Person;
     clienteDTOForm!:FormGroup;
     
-    //Data From URL
-    nrUsr!: number;
-    tpAcao!: string;
-  
     //Input View
     @ViewChild("swalService") swalService!:SwalComponent;
 
     //Attributes
     positionsList!:Position[];
     currentUser!: User | null;
-    currentUserId!: number | null;
+    nrUsr: number | undefined;
+
 
     //semaforos
     formFullyLoaded:boolean = false;
+  
+  
   
     
     
@@ -104,36 +103,30 @@ export class ProfileComponent implements OnInit {
   }
 
   consultarUsuario(){
-    this.route.paramMap.subscribe({
-      next:(params) => {
-        console.log(params)
-        const nrUsrParam = params.get('nrUsr');
-        if(  nrUsrParam != null && typeof nrUsrParam !== 'undefined'
-        ){
-          this.nrUsr  = Number.parseInt(nrUsrParam);
-          this.personService.consultaPessoa(this.nrUsr).subscribe({
-            next: (e:Person) => {
-              console.log(JSON.stringify(e));
-              
-              this.carregarPessoaInForm(e);
+   
+      this.nrUsr = UserService.getCurrentUser()?.id
+      this.personService.consultaPessoa(this.nrUsr).subscribe({
+        next: (e:Person) => {
+          console.log(JSON.stringify(e));
+          
+          this.carregarPessoaInForm(e);
+          
 
-              this.swalService.titleText = "Pessoa Carregada com Sucesso!";
-              this.swalService.text = "";
-              this.swalService.icon = "success";
-              this.swalService.fire();
-            },
-            error: (err:HttpErrorResponse) => {
-              this.swalService.titleText = "Erro Ao Consultar Pessoa"
-              this.swalService.text = `${err.error.error} : ${err.error.message} \n `
-              this.swalService.icon = "error"
-              this.swalService.fire();
-            }
-          });
+          this.swalService.titleText = "Pessoa Carregada com Sucesso!";
+          this.swalService.text = "";
+          this.swalService.icon = "success";
+          this.swalService.fire();
+        },
+        error: (err:HttpErrorResponse) => {
+          this.swalService.titleText = "Erro Ao Consultar Pessoa"
+          this.swalService.text = `${err.error.error} : ${err.error.message} \n `
+          this.swalService.icon = "error"
+          this.swalService.fire();
         }
-      }
-    });
+      });
   }
-
+    
+    
     consultarCargos(){
       return this.positionService.consultarCargos()
       .subscribe({

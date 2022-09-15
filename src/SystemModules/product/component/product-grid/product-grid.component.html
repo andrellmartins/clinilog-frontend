@@ -1,5 +1,6 @@
+<div class="buttonCadastro">
 <button mat-raised-button routerLink="cadastro" color="primary">Cadastrar Produtos</button>
-
+</div>
 <section tabindex="0">
     <table mat-table [width]="'100%'" [dataSource]=produtos>
 
@@ -25,10 +26,10 @@
         <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef> Ações </th>
         <td mat-cell class="inline-block" *matCellDef="let element"> 
-            <button mat-raised-button [routerLink]="['cadastro/editar/', element.id]" color="accent"   >Editar</button>
-            <button mat-raised-button [routerLink]="['cadastro/visualizar/', element.id]" color="primary"  >Visualizar</button>
+            <button mat-raised-button [routerLink]="['cadastro/editar/', element.id]" color="editar"   >Editar</button>
+            <button mat-raised-button [routerLink]="['cadastro/visualizar/', element.id]" color="visualizar"  >Visualizar</button>
             <button mat-raised-button (click)="excluirProduto(element.id)" color="warn" >Excluir</button>
-            <button mat-raised-button [routerLink]="['cadastro/manageBatches/', element.id]" color="warn" >Gerenciar Lotes</button>
+            <button mat-raised-button [routerLink]="['cadastro/manageBatches/', element.id]" color="lote" >Gerenciar Lotes</button>
         </td>
         </ng-container>
 

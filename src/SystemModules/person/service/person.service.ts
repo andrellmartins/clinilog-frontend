@@ -22,7 +22,7 @@ export class PersonService {
   public cadastrarUsuario(clienteDTO:Person):Observable<Person>{
     return this.httpClient.post('/person/',clienteDTO);
   }
-  public consultaPessoa(idPessoa:number):Observable<Person>{
+  public consultaPessoa(idPessoa:number | undefined):Observable<Person>{
     return this.httpClient.get('/person/'+idPessoa);
   }
 

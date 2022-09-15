@@ -1,8 +1,6 @@
-<div>
+<div class="buttonCadastro">
     <button mat-raised-button routerLink="cadastrar" color="primary">Cadastrar Pessoas</button>
-
 </div>
-
 
 <section tabindex="0">
     <table mat-table [width]="'100%'" [dataSource]="pessoas">
@@ -29,8 +27,8 @@
         <ng-container matColumnDef="acoes">
         <th mat-header-cell *matHeaderCellDef> Acões </th>
         <td mat-cell class="inline-block" *matCellDef="let element"> 
-            <button mat-raised-button [routerLink]="['cadastrar/editar/', element.id]" color="accent"   >Editar</button>
-            <button mat-raised-button [routerLink]="['cadastrar/visualizar/', element.id]" color="primary"  >Visualizar</button>
+            <button mat-raised-button [routerLink]="['cadastrar/editar/', element.id]" color="editar"   >Editar</button>
+            <button mat-raised-button [routerLink]="['cadastrar/visualizar/', element.id]" color="visualizar"  >Visualizar</button>
             <button mat-raised-button (click)="excluirPerson(element.id)" color="warn" >Excluir</button>
         </td>
         </ng-container>

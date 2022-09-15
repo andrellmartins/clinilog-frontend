@@ -13,6 +13,7 @@ import { CadastroProdutosComponent } from '../product/component/cadastro-produto
 import { PersonService } from '../person/service/person.service';
 import { HomeComponent } from './component/home/home.component';
 import { BatchComponent } from '../product/component/batch/batch.component';
+import { ProfileComponent } from './component/profile/profile.component';
 
 @NgModule({
   providers:[
@@ -37,6 +38,7 @@ import { BatchComponent } from '../product/component/batch/batch.component';
     CadastroProdutosComponent,
     HomeComponent,
     BatchComponent,
+    ProfileComponent
   ]
 })
 export class GeneralRouterModule { }

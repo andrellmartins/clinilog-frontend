@@ -2,6 +2,7 @@
   <mat-card-header>
     <mat-card-title>CliniLog</mat-card-title>
     <mat-card-subtitle>Perfil</mat-card-subtitle>
+    <ng-container><img mat-card-md-image src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png"></ng-container>
   </mat-card-header>
   <mat-card-content>
     <form [formGroup]="clienteDTOForm">
@@ -95,13 +96,19 @@
           <input formControlName="pharma_crf_uf" matInput name="pharma.crf.uf" placeholder="UF CRF" required>
         </mat-form-field>
   </ng-container>
+  <ng-container *ngIf="clienteDTOForm.get('tipo_usuario')?.value == 'paciente'"></ng-container>
+  <mat-divider></mat-divider>
+  <mat-list-item>Configurações</mat-list-item>
+<ng-container>
+  
 </ng-container>
 </ng-container>
-<ng-container *ngIf="clienteDTOForm.get('tipo_usuario')?.value == 'paciente'">
+</ng-container>
 
-</ng-container>
       </mat-list>
     </form>
+
+  
   </mat-card-content>
 </mat-card>
 

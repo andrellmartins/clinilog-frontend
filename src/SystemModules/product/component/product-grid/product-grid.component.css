@@ -15,4 +15,23 @@ a:hover, a:active{
     margin: 0;
 }
 
+.mat-editar{
+    background-color: goldenrod;
+    color: white;
+}
+
+.mat-visualizar{
+    background-color: green;
+    color: white;
+}
+
+.mat-lote{
+    background-color: violet;
+    color: white;
+}
+
+.buttonCadastro{
+    margin-top: 50px;
+}
+
 

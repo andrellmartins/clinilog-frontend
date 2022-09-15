@@ -1,0 +1,9 @@
+mat-card-header{
+    display:flex;
+    flex-direction: column;
+}
+
+mat-card-avatar{
+    height: 100px;
+    width: 100px;
+}
