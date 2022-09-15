@@ -58,7 +58,7 @@ export class GeneralInterceptor implements HttpInterceptor {
         if(err instanceof HttpErrorResponse && err.status == 403 && err.url !== this.server_url + '/login'){
           const currentUser:User|null = UserService.getCurrentUser();
           if(currentUser == null){
-            return caught;
+            throw err;
           }
           this.userService.login(currentUser).subscribe({
             next(value) {
@@ -72,8 +72,8 @@ export class GeneralInterceptor implements HttpInterceptor {
           });
           
         }
-        throw caught;
-      })
+        throw err;
+      }) 
     )
   }
 

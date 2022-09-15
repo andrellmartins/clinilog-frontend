@@ -18,9 +18,21 @@
             <input formControlName="med_principio" matInput name="med.principio" placeholder="Principio Ativo" required>
         </mat-form-field>
 </ng-container>
+<ng-container *ngIf="isManagingBatches()">
+    <mat-divider></mat-divider>
+    <mat-list-item>Lotes</mat-list-item>
+    <div *ngFor="let batch of productDTO.lote">
+        <app-batch  [batch]="batch"></app-batch>
+        <button mat-raised-button color="primary" (click)="deletarLoteAtual(batch.id)">excluir</button>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="cadastrarNovoLote()">Incluir novo Lote</button>
+</ng-container>
+<ng-container *ngIf="!isVisualizar()">
+    <button mat-raised-button color="primary" (click)="fazerCadastroProdutos()">{{!isEditing() ? "Cadastrar" : "Editar"}}</button>
+</ng-container>
 </form>
 </mat-list>
-<button mat-raised-button color="primary" (click)="fazerCadastroProdutos()">Salvar</button>
 
 <swal #swalService
   [text] = "swalService.text" 

@@ -10,8 +10,8 @@ export class Product  {
     public id_func_cadastro!:string;
     public data_cadastro!:Date;
     public deletado!:boolean;
-    public lote!:Batch[];
-    public medicamento!:Medicine;
+    public lote?:Batch[];
+    public medicamento?:Medicine;
   
 
     static initializeWithJson(jsonstring:string):Product{

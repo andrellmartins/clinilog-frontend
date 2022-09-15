@@ -12,6 +12,7 @@ import { NavbarComponent } from './component/navbar/navbar.component';
 import { CadastroProdutosComponent } from '../product/component/cadastro-produtos/cadastro-produtos.component';
 import { PersonService } from '../person/service/person.service';
 import { HomeComponent } from './component/home/home.component';
+import { BatchComponent } from '../product/component/batch/batch.component';
 
 @NgModule({
   providers:[
@@ -34,7 +35,8 @@ import { HomeComponent } from './component/home/home.component';
     PersonGridComponent,
     NavbarComponent,
     CadastroProdutosComponent,
-    HomeComponent
+    HomeComponent,
+    BatchComponent
   ]
 })
 export class GeneralRouterModule { }

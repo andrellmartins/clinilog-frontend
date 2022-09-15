@@ -17,11 +17,12 @@ export class UserService {
   static getCurrentUser(): User | null {
     const userString:string|null = localStorage.getItem(UserService.currentUserToken);
     if(userString == null){
-      return new User;
+      return null;
     }else{
       return User.initializeWithJson(userString);
     }
   }
+  
   private setCurrentUser(user:User): void {
     localStorage.setItem(UserService.currentUserToken, JSON.stringify(user))
   }
@@ -37,6 +38,7 @@ export class UserService {
     ).pipe(
       map(
         (response:User):User => {
+          response.password = usuario.password;
           this.setCurrentUser(response)
           return response;
         }

@@ -16,6 +16,7 @@ export class ProductGridComponent implements OnInit {
     'descricao',
     'isMed',
     'data_cadastro',
+    'acoes'
   ];
 
   constructor( private productService:ProductService) { }
@@ -25,7 +26,7 @@ export class ProductGridComponent implements OnInit {
   }
 
   carregarProdutos(){
-    this.productService.consultaProduto()
+    this.productService.consultaProdutos()
     .subscribe({
       next: (produtos:Product[]) => {
         this.produtos = produtos;
@@ -34,6 +35,19 @@ export class ProductGridComponent implements OnInit {
           console.log(err)
       },
     })
+  }
+  excluirProduto(idProduto:number){
+    const confirm:boolean  = window.confirm("Tem certeza que deseja deletar um Produto ?");
+    if(confirm){
+      this.productService.excluirProduto(idProduto).subscribe({
+        next:(message:boolean) => {
+          if(message){
+            alert('Produto Deletado do Sistema')
+            this.carregarProdutos();
+          }
+        }
+      });
+    }
   }
 
 }

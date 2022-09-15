@@ -15,7 +15,7 @@ export const productRoutes:Routes = [
     component:CadastroProdutosComponent,
   },
   {
-    path:'cadastro/:path/:nrUsr',
+    path:'cadastro/:tpAcao/:idProduto',
     component:CadastroProdutosComponent,
   }
 ]
@@ -23,7 +23,7 @@ export const productRoutes:Routes = [
 @NgModule({
   imports: [
     GeneralRouterModule,
-    SharedModule
+    SharedModule,
   ],
   exports: [
   ],

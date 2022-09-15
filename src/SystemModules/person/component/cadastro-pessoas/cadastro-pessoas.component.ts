@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse, HttpStatusCode } from '@angular/common/http';
 import { Component, Input, OnInit, AfterContentChecked, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
@@ -78,6 +78,13 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
             window.location.href = '/inicio/pessoas';
           }
         }
+        this.swalService.fire();
+      },
+      error: (err:HttpErrorResponse) => {
+        console.log(err);
+        this.swalService.titleText = "Erro Ao Consultar Pessoa"
+        this.swalService.text = `${err.error.error} : ${err.error.message} \n `
+        this.swalService.icon = "error"
         this.swalService.fire();
       }
     });

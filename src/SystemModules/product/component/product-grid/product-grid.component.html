@@ -20,6 +20,17 @@
         <th mat-header-cell *matHeaderCellDef> Data de Cadastro </th>
         <td mat-cell *matCellDef="let element"> {{element.data_cadastro}} </td>
         </ng-container>
+        
+        <!-- Weight Column -->
+        <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef> Ações </th>
+        <td mat-cell class="inline-block" *matCellDef="let element"> 
+            <button mat-raised-button [routerLink]="['cadastro/editar/', element.id]" color="accent"   >Editar</button>
+            <button mat-raised-button [routerLink]="['cadastro/visualizar/', element.id]" color="primary"  >Visualizar</button>
+            <button mat-raised-button (click)="excluirProduto(element.id)" color="warn" >Excluir</button>
+            <button mat-raised-button [routerLink]="['cadastro/manageBatches/', element.id]" color="warn" >Gerenciar Lotes</button>
+        </td>
+        </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="productColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: productColumns;"></tr>
