@@ -22,9 +22,14 @@ mat-card-actions{
   align-items: center;
 }
 p.fazerCadastro{
-  margin-top: 15px;
   font-size: 8pt;
 }
+
+p.resetarSenha{
+  font-size: 8pt;
+}
+
+
 mat-card-title,
 mat-card-subtitle{
   text-align: center;

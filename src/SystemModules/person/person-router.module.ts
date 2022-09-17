@@ -6,6 +6,7 @@ import { GeneralRouterModule } from '../general/general-router.module';
 import { PersonGridComponent } from './component/person-grid/person-grid.component';
 import { Routes } from '@angular/router';
 import { CadastroPessoasComponent } from './component/cadastro-pessoas/cadastro-pessoas.component';
+import { SharedModule } from 'src/config/sharedmodules/shared.module';
 
 
 export const personRoutes: Routes = [
@@ -21,6 +22,7 @@ export const personRoutes: Routes = [
     path:'cadastrar/:acao/:nrUsr',
     component:CadastroPessoasComponent
   }
+  
 ];
 
 @NgModule({
@@ -28,10 +30,13 @@ export const personRoutes: Routes = [
     PersonService,
     HttpClientService,
   ],
-  declarations: [],
+  declarations: [
+    
+  ],
   imports: [
     CommonModule,
-    GeneralRouterModule
+    GeneralRouterModule,
+    SharedModule
   ]
 })
 export class PersonRouterModule { }

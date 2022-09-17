@@ -16,3 +16,20 @@ a:hover, a:active{
 }
 
 
+
+
+.mat-editar{
+    background-color: goldenrod;
+    color: white;
+}
+
+.mat-visualizar{
+    background-color: green;
+    color: white;
+}
+
+.buttonCadastro{
+    margin-top: 50px;
+}
+
+

@@ -1,0 +1,121 @@
+<mat-card >
+  <mat-card-header>
+    <mat-card-title>CliniLog</mat-card-title>
+    <mat-card-subtitle>Perfil</mat-card-subtitle>
+    <ng-container><img mat-card-md-image src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png"></ng-container>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="clienteDTOForm">
+      <mat-list>
+        <mat-list-item>Dados Pessoais</mat-list-item>
+        <mat-form-field>
+          <input formControlName="person_nome"      matInput name="personName"     placeholder="Nome"              class="form-control"  required >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="person_cpf"       matInput name="personCpf"      placeholder="CPF"                 required mask="00/00/00 00:00:00">
+          <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['repeatedNumber'] == true">
+            CPF não pode ter todos os caracteres iguais
+          </mat-error>
+          <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['invalidCPF'] == true">
+            CPF digitádo não é valido
+          </mat-error>
+          <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['invalidLength'] == true">
+            CPF deve conter 11 números
+          </mat-error>
+          <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['validationFailed'] == true">
+            Dígito verificador do CPF inválido
+          </mat-error>
+          <mat-error *ngIf="clienteDTOForm.get('person_cpf')?.errors?.['invalidPattern'] == true">
+            Formato do CPF está incorreto. Digite apenas os números do CPF.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="person_ender"     matInput name="personEnder"    placeholder="Endereço"            required >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="person_cep"       matInput name="personCep"      placeholder="CEP"                 required >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="person_data_nasc" matInput name="personDataNasc" placeholder="Data de nascimento"  required >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="person_sexo"      matInput name="personSexo"     placeholder="Sexo"                required >
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Tipo de Pessoa</mat-label>
+          <mat-select formControlName="tipo_usuario" name="user.type" >
+            <mat-option value="funcionario">Funcionario</mat-option>
+            <mat-option value="paciente">Paciente</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+        <mat-list-item>Dados do Usuário</mat-list-item>
+        <mat-form-field>
+          <input formControlName="user_login" matInput name="user.login" placeholder="Login" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="user_password" matInput name="user.password" placeholder="Senha" type="password" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="user_password_confirmation" matInput name="user.password_confirmation" placeholder="Confirmação da Senha" type="password" required>
+        </mat-form-field>
+        <mat-error *ngIf="isSenhaSenhaDiferente()">
+          Senhas digitadas são diferentes !
+        </mat-error>
+<ng-container *ngIf="clienteDTOForm.get('tipo_usuario')?.value == 'funcionario'">
+        <mat-divider></mat-divider>
+        <mat-list-item>Dados do Funcionário</mat-list-item>
+        <mat-form-field>
+          <input formControlName="employee_salario" matInput name="employee.salario" placeholder="Salario" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="employee_pis" matInput name="employee.pis" placeholder="Pis" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Cargo </mat-label>
+          <mat-select formControlName="employee_cargo" name="employee.cargo" >
+            <mat-option *ngFor="let position of positionsList" [value]="position">{{position.cargo}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+<ng-container *ngIf="(isMedic() || isPharma()) && clienteDTO.employee!== undefined ">
+        <mat-divider></mat-divider>
+        <mat-list-item>Dados Extras do Cargo de {{clienteDTO.employee.cargo.cargo}}</mat-list-item>
+  <ng-container *ngIf="isMedic()">
+        <mat-form-field>
+          <input formControlName="medic_crm" matInput name="medic.crm" placeholder="CRM" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="medic_crm_uf" matInput name="medic.crm.uf" placeholder="UF CRM" required>
+        </mat-form-field>
+  </ng-container>
+  <ng-container *ngIf="isPharma()">
+        <mat-form-field>
+          <input formControlName="pharma_crf" matInput name="pharma.crf" placeholder="CRF" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="pharma_crf_uf" matInput name="pharma.crf.uf" placeholder="UF CRF" required>
+        </mat-form-field>
+  </ng-container>
+  <ng-container *ngIf="clienteDTOForm.get('tipo_usuario')?.value == 'paciente'"></ng-container>
+  <mat-divider></mat-divider>
+  <mat-list-item>Configurações</mat-list-item>
+<ng-container>
+  
+</ng-container>
+</ng-container>
+</ng-container>
+
+      </mat-list>
+    </form>
+
+  
+  </mat-card-content>
+</mat-card>
+
+<swal #swalService
+[text] = "swalService.text" 
+[titleText] = "swalService.titleText" 
+[icon] = "swalService.icon" 
+(didClose) = "swalServiceClose()" 
+>
+</swal>
