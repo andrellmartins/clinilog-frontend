@@ -1,6 +1,6 @@
 <mat-list>
     <mat-list-item>Dados do Produto</mat-list-item>
-<form [formGroup]="productDTOForm">
+<form [formGroup]="productDTOForm" (submit)="actionButtonSubmit()">
     <mat-form-field>
         <input formControlName="product_descricao"     matInput name="productDesc"    placeholder="Descrição"            required >
     </mat-form-field>
@@ -21,15 +21,15 @@
 <ng-container *ngIf="isManagingBatches()">
     <mat-divider></mat-divider>
     <mat-list-item>Lotes</mat-list-item>
-    <div *ngFor="let batch of productDTO.lote">
+    <div *ngFor="let batch of productDTO.lote, let i = index">
         <app-batch  [batch]="batch"></app-batch>
-        <button mat-raised-button color="primary" (click)="deletarLoteAtual(batch.id)">excluir</button>
+        <button mat-raised-button color="primary" (click)="deletarLoteAtual(i)">excluir</button>
     </div>
 
-    <button mat-raised-button color="primary" (click)="cadastrarNovoLote()">Incluir novo Lote</button>
+    <button mat-raised-button color="primary" (click)="cadastrarNovoLote()" type="button">Incluir novo Lote</button>
 </ng-container>
 <ng-container *ngIf="!isVisualizar()">
-    <button mat-raised-button color="primary" (click)="fazerCadastroProdutos()">{{!isEditing() ? "Cadastrar" : "Editar"}}</button>
+    <button mat-raised-button color="primary" type="submit"> {{getActionButtonText()}}</button>
 </ng-container>
 </form>
 </mat-list>

@@ -9,6 +9,7 @@ import { ProductService } from 'src/SystemModules/product/service/product.servic
 import { Batch } from '../../model/batch';
 import { Medicine } from '../../model/medicine';
 import { Product } from '../../model/product';
+import { BatchService } from '../../service/batch.service';
 
 @Component({
   selector: 'app-cadastro-produtos',
@@ -32,8 +33,9 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
   @ViewChild("swalService") swalService!:SwalComponent;
 
   constructor(
-    private productService:ProductService,
-    private route: ActivatedRoute
+    private productService : ProductService  ,
+    private batchService   : BatchService    ,
+    private route          :  ActivatedRoute
   ) {
     this.productDTOForm = new FormGroup({
       product_descricao: new FormControl('',[FormValidator.required,]),
@@ -45,8 +47,7 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
 
    }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   ngAfterContentChecked():void {
     if(this.formFullyLoaded === false){
@@ -131,6 +132,9 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
       this.productDTO.medicamento.id = produto.medicamento.id
       this.productDTOForm.get('med_principio')?.setValue(produto.medicamento.principio_ativo)
     }
+    if(produto.lote != null){
+      this.productDTO.lote = produto.lote;
+    }
   }
 
   validarAcaoForm(){
@@ -139,13 +143,53 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
     }
   }
 
-
   fazerCadastroProdutos(){
     this.productService.cadastrarProduto(this.productDTO)
     .subscribe({
       next:(product:Product) => {
         this.swalService.titleText = "Sucesso na Operação ";
         this.swalService.text = "Produto " + product.descricao + " !";
+        this.swalServiceClose = () => {
+          window.location.href = '/inicio/produtos/';
+        }
+        if(this.isManagingBatches()){
+          this.swalService.text = "Lotes do produto " + product.descricao + " cadastrados com sucesso !";
+          this.swalServiceClose = () => {
+            this.carregarProdutoInForm(product)
+          }
+        }
+        this.swalService.icon = "success";
+        this.swalService.fire();
+      },
+      error:(err:HttpErrorResponse) => {
+        console.log(err)
+        this.swalService.titleText = "Falha ao Cadastrar";
+        this.swalService.text = "Produto " + this.productDTO.descricao + " Não foi Cadastrado! "
+        if(this.isManagingBatches()){
+          this.swalService.text = "Lotes do produto " + this.productDTO.descricao + " Não foram salvos! ";
+        }
+        this.swalService.text += "\n Mensagem:" + err.message;
+        this.swalService.icon = "error";
+        this.swalServiceClose = () => {}
+        this.swalService.fire();
+      }
+    });
+  }
+  
+  fazerCadastroLotes(){
+    if(this.productDTO.lote == null || this.productDTO.lote == undefined){
+      return;
+    }
+    this.batchService.cadastrarLotes(this.productDTO.id, this.productDTO.lote)
+    .subscribe({
+      next:(product:boolean) => {
+        if(!product){
+          throw new HttpErrorResponse({
+            error:"Não foi possível cadastrar os Lotes.",
+          });
+        }
+        this.swalService.titleText = "Sucesso na Operação ";
+        this.swalService.text = "Lotes do Produto " + this.productDTO.descricao + " Salvos!";
         this.swalService.icon = "success";
         this.swalServiceClose = () => {
           window.location.href = '/inicio/produtos/';
@@ -154,8 +198,8 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
       },
       error:(err:HttpErrorResponse) => {
         console.log(err)
-        this.swalService.titleText = "Falha ao Cadastrar";
-        this.swalService.text = "Produto " + this.productDTO.descricao + " Não foi Cadastrado! \n Mensagem:" + err.message;
+        this.swalService.titleText = "Falha ao Salvar Lotes";
+        this.swalService.text = "Lotes do Produto " + this.productDTO.descricao + " Não foram Salvos! \n Mensagem:" + err.message;
         this.swalService.icon = "error";
         this.swalServiceClose = () => {}
         this.swalService.fire();
@@ -178,13 +222,34 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
   }
 
   deletarLoteAtual(idLote:number){
-    //this.productDTO?.lote
+    console.log(this.productDTO.lote, idLote);
+    console.log(this.productDTO.lote !== undefined && this.productDTO.lote[idLote] !== undefined)
+    if( this.productDTO.lote !== undefined && 
+        this.productDTO.lote[idLote] !== undefined
+    ){
+      this.productDTO.lote?.splice(idLote, 1);  
+    }
   }
   cadastrarNovoLote(){
     if(this.productDTO.lote == null){
       this.productDTO.lote = [];
     }
     this.productDTO?.lote?.push(new Batch);
+  }
+
+  getActionButtonText(){
+    if(this.isEditing()){
+      return 'Editar';
+    }
+    if(this.isManagingBatches()){
+      return 'Salvar Lotes';
+    }
+    return 'Cadastrar';
+  }
+
+  actionButtonSubmit(){
+    this.fazerCadastroProdutos();
+    
   }
 
 

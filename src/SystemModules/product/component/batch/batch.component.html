@@ -1,19 +1,18 @@
-<div>
-    <small>{{batch.id}}</small>
+<div [formGroup]="batchForm">
     <mat-form-field>
-        <input [(ngModel)]="batch.lote" matInput placeholder="Lote">
+        <input formControlName="lote" matInput placeholder="Lote">
     </mat-form-field>
     <mat-form-field>
-        <input [(ngModel)]="batch.validade" matInput placeholder="Data de Validade">
+        <input formControlName="validade" matInput placeholder="Data de Validade">
     </mat-form-field>
     <ng-container *ngIf="isNovo()">
         <mat-form-field>
-            <input [(ngModel)]="batch.qtd_inicial" matInput placeholder="Quantidade Inicial">
+            <input formControlName="qtd_inicial" matInput placeholder="Quantidade Inicial">
         </mat-form-field>
     </ng-container>
     <ng-container *ngIf="!isNovo()">
         <mat-form-field >
-            <input [(ngModel)]="batch.qtd_disponivel" matInput placeholder="Quantidade Disponível">
+            <input formControlName="qtd_disponivel" matInput placeholder="Quantidade Disponível">
         </mat-form-field>
     </ng-container>
 </div>

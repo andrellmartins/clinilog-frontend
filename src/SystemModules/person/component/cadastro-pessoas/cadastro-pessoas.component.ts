@@ -277,7 +277,7 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
   }
 
   carregarPessoaInForm(clienteDTOLoad:Person) {
-
+    console.log(clienteDTOLoad);
     this.clienteDTO.id = clienteDTOLoad.id;
     this.clienteDTOForm.get("person_nome")?.setValue(clienteDTOLoad.nome);
     this.clienteDTOForm.get("person_cpf")?.setValue(clienteDTOLoad.cpf);
@@ -286,7 +286,7 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
     this.clienteDTOForm.get("person_data_nasc")?.setValue(clienteDTOLoad.data_nasc);
     this.clienteDTOForm.get("person_sexo")?.setValue(clienteDTOLoad.sexo);
 
-    if(clienteDTOLoad.usuario != null){
+    if(clienteDTOLoad.usuario != undefined && clienteDTOLoad.usuario != null){
       this.clienteDTO.usuario.id = clienteDTOLoad.usuario.id;
       this.clienteDTOForm.get("user_login")?.setValue(clienteDTOLoad.usuario.login);
       this.clienteDTOForm.get("user_password")?.setValue("");
@@ -294,7 +294,7 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
       this.clienteDTOForm.get("tipo_usuario")?.setValue(typeof clienteDTOLoad.employee !== 'undefined' ? 'funcionario' : 'paciente' );
     }
 
-    if(typeof clienteDTOLoad.employee !== 'undefined'){
+    if(clienteDTOLoad.employee != undefined && clienteDTOLoad.employee != null){
       this.clienteDTO.employee = new Employee;
       this.clienteDTO.employee.id = clienteDTOLoad.employee.id;
       this.clienteDTOForm.get("employee_salario")?.setValue(clienteDTOLoad.employee.salario);
