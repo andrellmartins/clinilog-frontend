@@ -4,6 +4,12 @@ import { Patient } from "./patient";
 
 export class Person {
 
+    constructor(userObj?:Object){
+        if(userObj != null){
+            return Object.assign(new Person,userObj);
+        }
+    }
+
     public id!:number;
     public nome!:string;
     public cpf!:string;

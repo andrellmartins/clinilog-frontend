@@ -14,6 +14,7 @@ import { PersonService } from '../person/service/person.service';
 import { HomeComponent } from './component/home/home.component';
 import { BatchComponent } from '../product/component/batch/batch.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { RecuperacaoSenhaComponent } from './component/recuperacao-senha/recuperacao-senha.component';
 
 @NgModule({
   providers:[
@@ -38,7 +39,8 @@ import { ProfileComponent } from './component/profile/profile.component';
     CadastroProdutosComponent,
     HomeComponent,
     BatchComponent,
-    ProfileComponent
+    ProfileComponent,
+    RecuperacaoSenhaComponent
   ]
 })
 export class GeneralRouterModule { }

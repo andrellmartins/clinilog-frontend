@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse, HttpStatusCode } from '@angular/common/http';
-import { Component, Input, OnInit, AfterContentChecked, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, AfterContentChecked, ViewChild, OnChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { PositionConstants } from 'src/config/constants/position.constants';
@@ -18,18 +18,20 @@ import { UserService } from '../../../general/service/user.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
-  selector: 'app-cadastro',
+  selector: 'app-cadastro-pessoas',
   templateUrl: './cadastro-pessoas.component.html',
   styleUrls: ['./cadastro-pessoas.component.css']
 })
-export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
+export class CadastroPessoasComponent implements OnInit, OnChanges, AfterContentChecked {
   //DTOS && Forms
   clienteDTO!:Person;
   clienteDTOForm!:FormGroup;
   
   //Data From URL
-  nrUsr!: number;
-  tpAcao!: string;
+  @Input()
+  public nrUsr!: number;
+  @Input()
+  public tpAcao!: string;
 
   //Input View
   @ViewChild("swalService") swalService!:SwalComponent;
@@ -52,6 +54,10 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
 
   ngOnInit(): void {
       this.consultarCargos()
+  }
+
+  ngOnChanges(){
+    this.validarAcaoForm();
   }
 
   ngAfterContentChecked():void {
@@ -90,20 +96,14 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
     });
   }
   
-  editarCadastro(){
-    this.personService.editarUsuario(this.clienteDTO)
-    .subscribe({
-      next:(person:Person) => {
-        this.swalService.titleText = "Sucesso ao Editar";
-        this.swalService.text = "Pessoa " + person.nome + " Editada com Sucesso";
-        this.swalService.icon = "success";
-        this.swalServiceClose = () => {}
-        this.swalService.fire();
-      }
-    });
-  }
-  
+ 
   consultarUsuario(){
+    if(  this.nrUsr != null && typeof this.nrUsr !== 'undefined'
+      && this.tpAcao != null && typeof this.tpAcao !== 'undefined'
+    ){
+      this.carregarPessoaByNrUsr(this.nrUsr);
+      return;
+    }
     this.route.paramMap.subscribe({
       next:(params) => {
         console.log(params)
@@ -114,30 +114,33 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
         ){
           this.nrUsr  = Number.parseInt(nrUsrParam)
           this.tpAcao = tpAcaoParam;
+          this.carregarPessoaByNrUsr(this.nrUsr);
           
-          this.personService.consultaPessoa(this.nrUsr).subscribe({
-            next: (e:Person) => {
-              console.log(JSON.stringify(e));
-              
-              this.carregarPessoaInForm(e);
-              this.validarAcaoForm();
-
-              this.swalService.titleText = "Pessoa Carregada com Sucesso!";
-              this.swalService.text = "";
-              this.swalService.icon = "success";
-              this.swalService.fire();
-            },
-            error: (err:HttpErrorResponse) => {
-              this.swalService.titleText = "Erro Ao Consultar Pessoa"
-              this.swalService.text = `${err.error.error} : ${err.error.message} \n `
-              this.swalService.icon = "error"
-              this.swalService.fire();
-            }
-          });
         }
       }
     });
     
+  }
+
+  carregarPessoaByNrUsr(nrUsr:number ){
+    this.personService.consultaPessoa(this.nrUsr).subscribe({
+      next: (e:Person) => {
+        console.log(JSON.stringify(e));
+        
+        this.carregarPessoaInForm(e);
+
+        this.swalService.titleText = "Pessoa Carregada com Sucesso!";
+        this.swalService.text = "";
+        this.swalService.icon = "success";
+        this.swalService.fire();
+      },
+      error: (err:HttpErrorResponse) => {
+        this.swalService.titleText = "Erro Ao Consultar Pessoa"
+        this.swalService.text = `${err.error.error} : ${err.error.message} \n `
+        this.swalService.icon = "error"
+        this.swalService.fire();
+      }
+    });
   }
 
   consultarCargos(){
@@ -168,6 +171,7 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
     this.clienteDTO.paciente = new Patient;
     this.clienteDTO.cpf = '';
   }
+
   iniciarFormValidator(){
     this.clienteDTOForm = new FormGroup({
       person_nome :       new FormControl('',[FormValidator.required,]),
@@ -327,6 +331,8 @@ export class CadastroPessoasComponent implements OnInit, AfterContentChecked {
   validarAcaoForm = () => {
     if(this.isVisualizar()){
       this.clienteDTOForm.disable()
+    }else{
+      this.clienteDTOForm.enable()
     }
   }
 

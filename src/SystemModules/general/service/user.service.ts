@@ -14,16 +14,16 @@ import { getCurrencySymbol } from '@angular/common';
 export class UserService {
   static readonly currentUserToken = 'currentUser';
 
-  static getCurrentUser(): User | null {
+  static getCurrentUser(): Person | null {
     const userString:string|null = localStorage.getItem(UserService.currentUserToken);
     if(userString == null){
       return null;
     }else{
-      return User.initializeWithJson(userString);
+      return Person.initializeWithJson(userString);
     }
   }
   
-  static setCurrentUser(user:User): void {
+  static setCurrentUser(user:Person): void {
     localStorage.setItem(UserService.currentUserToken, JSON.stringify(user))
   }
 
@@ -31,10 +31,17 @@ export class UserService {
     private httpClient: HttpClientService
   ) {}
 
-  public login(usuario:User):Observable<User>{
+  public login(usuario:User):Observable<Person>{
     return this.httpClient.post(
       '/login', 
       usuario
+    );
+  }
+  
+  public alterarSenha(idUsuario:number, novaSenha:string ):Observable<boolean>{
+    return this.httpClient.put(
+      '/user/recuperar-senha/'+idUsuario, 
+      { novaSenha: novaSenha }
     );
   }
 

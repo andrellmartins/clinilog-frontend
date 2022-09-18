@@ -1,0 +1,32 @@
+<mat-card >
+    <mat-card-header>
+      <mat-card-title>CliniLog</mat-card-title>
+      <mat-card-subtitle>Recuperação de Senha</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="recuperaSenhaForm">
+        <mat-form-field>
+          <input formControlName="password"         matInput placeholder="Nova Senha" type="password" value="">
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="confirm_password" matInput placeholder="Confirmar nova senha" type="password" value="">
+        </mat-form-field>
+      </form>
+      <mat-error *ngIf="!validaSenhaIgual()">
+        Senhas digitadas são diferentes !
+      </mat-error>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="recuperarSenha()">Salvar Nova Senha</button>
+    </mat-card-actions>
+  </mat-card>
+  
+  
+  <swal #swalService
+   [text] = "swalService.text" 
+   [titleText] = "swalService.titleText" 
+   [icon] = "swalService.icon" 
+   (didClose)="onCloseModal()"
+   >
+  </swal>
+  

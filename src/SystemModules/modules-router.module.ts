@@ -9,8 +9,8 @@ import { CadastroPessoasComponent } from './person/component/cadastro-pessoas/ca
 import { InicioComponent } from './general/component/inicio/inicio.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './general/component/home/home.component';
-import { UserService } from './general/service/user.service';
 import { ProfileComponent } from './general/component/profile/profile.component';
+import { RecuperacaoSenhaComponent } from './general/component/recuperacao-senha/recuperacao-senha.component';
 
 const routes: Routes = [
   {
@@ -24,6 +24,10 @@ const routes: Routes = [
       {
         path:'cadastro',
         component:CadastroPessoasComponent
+      },
+      {
+        path:'recuperacao-senha/:nrUsr',
+        component:RecuperacaoSenhaComponent
       }
     ]
   },

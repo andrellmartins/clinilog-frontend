@@ -12,6 +12,7 @@ import {  catchError, map, Observable, of, tap } from 'rxjs';
 import { UserService } from 'src/SystemModules/general/service/user.service';
 import { User } from 'src/SystemModules/general/model/user';
 import { UrlTree } from '@angular/router';
+import { Person } from 'src/SystemModules/person/model/person';
 
 @Injectable()
 export class GeneralInterceptor implements HttpInterceptor {
@@ -57,10 +58,11 @@ export class GeneralInterceptor implements HttpInterceptor {
                 && request.body instanceof Object 
               ){
                 console.log(request.body)
-                let updatedUser:User = new User(response.body);
-                updatedUser.password = new User(request.body).password
+                let userResponse:Person = new Person(response.body);
+                let userRequest:User  = new User(request.body);
+                userResponse.usuario.password = userRequest.password;
                 this.setBearerToken(authorizationHeader)
-                UserService.setCurrentUser(updatedUser);
+                UserService.setCurrentUser(userResponse);
               }
             }
           }
@@ -70,13 +72,13 @@ export class GeneralInterceptor implements HttpInterceptor {
         catchError((err:any, caught:Observable<HttpEvent<unknown>>) => {
           console.log(err)
           if(err instanceof HttpErrorResponse && err.status == 403 && err.url !== this.server_url + '/login'){
-            const currentUser:User|null = UserService.getCurrentUser();
+            const currentUser:Person|null = UserService.getCurrentUser();
             console.log(currentUser);
             if(currentUser == null){
               throw err;
             }
-            return this.userService.login(currentUser).pipe(
-              map((user:User) => {
+            return this.userService.login(currentUser.usuario).pipe(
+              map((user:Person) => {
                 UserService.setCurrentUser(user);
                 throw new Error("Sessão Perdida e Restaurada");
               }),

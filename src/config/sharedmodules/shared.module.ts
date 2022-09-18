@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { MatTableModule } from '@angular/material/table';
     MatToolbarModule,
     MatMenuModule,
     MatOptionModule,
-    MatTableModule
+    MatTableModule,
+    MatExpansionModule
   ]
 })
 export class SharedModule { }
