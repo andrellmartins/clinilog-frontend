@@ -15,6 +15,7 @@ import { HomeComponent } from './component/home/home.component';
 import { BatchComponent } from '../product/component/batch/batch.component';
 import { ProfileComponent } from './component/profile/profile.component';
 import { RecuperacaoSenhaComponent } from './component/recuperacao-senha/recuperacao-senha.component';
+import { FormRecuperaSenhaComponent } from './component/form-recupera-senha/form-recupera-senha.component';
 
 @NgModule({
   providers:[
@@ -26,7 +27,6 @@ import { RecuperacaoSenhaComponent } from './component/recuperacao-senha/recuper
   ],
   exports: [
     RouterModule,
-    
   ],
   declarations: [
     CadastroPessoasComponent,
@@ -40,7 +40,8 @@ import { RecuperacaoSenhaComponent } from './component/recuperacao-senha/recuper
     HomeComponent,
     BatchComponent,
     ProfileComponent,
-    RecuperacaoSenhaComponent
+    RecuperacaoSenhaComponent,
+    FormRecuperaSenhaComponent,
   ]
 })
 export class GeneralRouterModule { }

@@ -17,6 +17,7 @@ export class Person {
     public cep!:number;
     public data_nasc!:string;
     public sexo!:string;
+    public email!:string;
     public deletado!:boolean;
     public employee?:Employee;
     public paciente?:Patient;

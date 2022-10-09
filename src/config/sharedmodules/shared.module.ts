@@ -17,7 +17,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -40,12 +41,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SweetAlert2Module,
     ReactiveFormsModule,
     MatSidenavModule,
+    MatCheckboxModule,
     MatIconModule,
     MatToolbarModule,
     MatMenuModule,
     MatOptionModule,
     MatTableModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgApexchartsModule
   ]
 })
 export class SharedModule { }

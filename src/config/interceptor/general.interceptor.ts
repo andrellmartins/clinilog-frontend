@@ -52,12 +52,12 @@ export class GeneralInterceptor implements HttpInterceptor {
           if(response instanceof HttpResponse){
             const authorizationHeader:string|null = response.headers.get('authorization');
             if(authorizationHeader != null && authorizationHeader.includes('Bearer')){
-              console.log(request);
+              //console.log(request);
               if(  response.body instanceof Object
                 && request instanceof Object 
                 && request.body instanceof Object 
               ){
-                console.log(request.body)
+                //console.log(request.body)
                 let userResponse:Person = new Person(response.body);
                 let userRequest:User  = new User(request.body);
                 userResponse.usuario.password = userRequest.password;
@@ -66,14 +66,14 @@ export class GeneralInterceptor implements HttpInterceptor {
               }
             }
           }
-          console.log(response, UserService.getCurrentUser())
+          //console.log(response, UserService.getCurrentUser())
           return response;
         }),
         catchError((err:any, caught:Observable<HttpEvent<unknown>>) => {
-          console.log(err)
+          //console.log(err)
           if(err instanceof HttpErrorResponse && err.status == 403 && err.url !== this.server_url + '/login'){
             const currentUser:Person|null = UserService.getCurrentUser();
-            console.log(currentUser);
+            //console.log(currentUser);
             if(currentUser == null){
               throw err;
             }
@@ -88,7 +88,7 @@ export class GeneralInterceptor implements HttpInterceptor {
                     throw err;
                   }
                   confirm('Seu Login expirou!');
-                  console.log("Sessão Limpa")
+                  //console.log("Sessão Limpa")
                   localStorage.clear();
                   window.location.href='/';
                   throw err;

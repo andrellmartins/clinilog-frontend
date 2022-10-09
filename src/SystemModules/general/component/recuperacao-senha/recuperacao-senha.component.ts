@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { FormValidator } from 'src/config/formvalidator/form-validator';
 import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-recuperacao-senha',
@@ -16,6 +17,7 @@ export class RecuperacaoSenhaComponent implements OnInit {
   @ViewChild("swalService")
   swalService!:SwalComponent;
   recuperaSenhaForm!:FormGroup;
+  user!:User;
 
   nrUsr!:number;
 
@@ -23,29 +25,38 @@ export class RecuperacaoSenhaComponent implements OnInit {
     private userService:UserService,
     private route          :  ActivatedRoute
   ) { 
+    
+  }
+
+  ngOnInit(): void {
     this.recuperaSenhaForm = new FormGroup({
       password:new FormControl('', [FormValidator.required]),
       confirm_password: new FormControl('', [FormValidator.required])
     });
-  }
 
-  ngOnInit(): void {
-    
+    this.route.paramMap.subscribe({
+      next:(params:ParamMap) => {
+        console.log(params);
+        const nrUsrParam:string|null = params.get('nrUsr');
+        if(nrUsrParam == null ){
+          return;
+        }
+        const nrUsrParamNumber:number = Number.parseInt(nrUsrParam);
+        if(isNaN(nrUsrParamNumber)){
+          return;
+        }
+        this.nrUsr = nrUsrParamNumber;
+      },
+    })
   }
 
   validaSenhaIgual = ():boolean => {
-    console.log(this.recuperaSenhaForm);
     if(this.recuperaSenhaForm == null){
       return true;
     }
     const senha            : string|null  = this.recuperaSenhaForm.get('password')?.value,
           confirmSenha     : string|null  = this.recuperaSenhaForm.get('confirm_password')?.value,
           isSenhaDiferente : boolean      = senha != null || confirmSenha != null || senha != confirmSenha;
-    console.log(
-      senha,
-      confirmSenha,
-      isSenhaDiferente,
-    );
     this.recuperaSenhaForm.get('confirmSenha')?.setErrors(
       !isSenhaDiferente ? null : {senhasDiferentes:true}
     )

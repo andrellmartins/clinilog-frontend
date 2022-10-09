@@ -37,11 +37,6 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
     private batchService   : BatchService    ,
     private route          :  ActivatedRoute
   ) {
-    this.productDTOForm = new FormGroup({
-      product_descricao: new FormControl('',[FormValidator.required,]),
-      tipo_produto: new FormControl('',[FormValidator.required,]),
-      med_principio: new FormControl('',[FormValidator.required,]),
-    });
     this.iniciarVariaveis();
     this.iniciarProuductFormValidator();
 
@@ -58,19 +53,20 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
   iniciarVariaveis(){
     this.productDTO = new Product();
     this.productDTO.medicamento = new Medicine;
-      
   }
   
   iniciarProuductFormValidator(){
     this.productDTOForm = new FormGroup({
-      product_descricao : new FormControl('',[FormValidator.required,]),
+      product_descricao: new FormControl('',[FormValidator.required,]),
+      qtd_minima:        new FormControl('',[FormValidator.required,]),
       tipo_produto: new FormControl('',[FormValidator.required,]),
-      med_principio: new FormControl('',[FormValidator.required,])
+      med_principio: new FormControl('',[FormValidator.required,]),
     });
 
     this.productDTOForm.valueChanges
     .subscribe((currentProductDTOForm:any) => {
       this.productDTO.descricao =  currentProductDTOForm?.product_descricao;
+      this.productDTO.qtd_minima =  currentProductDTOForm?.qtd_minima;
       this.productDTO.isMed  =  this.isMed();
       if(this.productDTO.isMed){
         if(this.productDTO.medicamento == null){
@@ -126,6 +122,7 @@ export class CadastroProdutosComponent implements OnInit, AfterContentChecked {
   carregarProdutoInForm(produto:Product){
     this.productDTO.id = produto.id;
     this.productDTOForm.get('product_descricao')?.setValue(produto.descricao)
+    this.productDTOForm.get('qtd_minima')?.setValue(produto.qtd_minima)
     this.productDTOForm.get('tipo_produto')?.setValue(produto.isMed ? 'medicamento' : 'insumo')
     if(produto.medicamento != null){
       this.productDTO.medicamento = new Medicine;

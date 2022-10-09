@@ -1,0 +1,29 @@
+<mat-card >
+    <mat-card-header>
+      <mat-card-title>CliniLog</mat-card-title>
+      <mat-card-subtitle>Recuperação de Senha</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <form>
+        <mat-form-field>
+          <input [(ngModel)]="email" name="email" matInput placeholder="Email de Recuperação" value="">
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="enviarEmail()">Recuperar Senha</button>
+    </mat-card-actions>
+    <mat-card-actions>
+      <p class="resetarSenha"><small>Lembrou sua Senha ? Clique <a routerLink="" >aqui</a> para fazer login.</small></p>
+    </mat-card-actions>
+  </mat-card>
+  
+  
+  <swal #swalService
+   [text] = "swalService.text" 
+   [titleText] = "swalService.titleText" 
+   [icon] = "swalService.icon" 
+   (didClose)="onCloseModal()"
+   >
+  </swal>
+  

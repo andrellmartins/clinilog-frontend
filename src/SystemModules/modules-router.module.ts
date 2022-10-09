@@ -11,6 +11,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './general/component/home/home.component';
 import { ProfileComponent } from './general/component/profile/profile.component';
 import { RecuperacaoSenhaComponent } from './general/component/recuperacao-senha/recuperacao-senha.component';
+import { FormRecuperaSenhaComponent } from './general/component/form-recupera-senha/form-recupera-senha.component';
+import { ProductMovementReportComponent } from './product/component/product-movement-report/product-movement-report.component';
+import { SharedModule } from 'src/config/sharedmodules/shared.module';
 
 const routes: Routes = [
   {
@@ -26,6 +29,10 @@ const routes: Routes = [
         component:CadastroPessoasComponent
       },
       {
+        path:'solicitar-recuperacao-senha',
+        component:FormRecuperaSenhaComponent
+      },
+      {
         path:'recuperacao-senha/:nrUsr',
         component:RecuperacaoSenhaComponent
       }
@@ -37,7 +44,7 @@ const routes: Routes = [
     children:[
       {
         path:'',
-        component:HomeComponent,
+        component:ProductMovementReportComponent,
       },
       {
         path:'produtos',
@@ -59,17 +66,17 @@ const routes: Routes = [
 @NgModule({
   exports:[
     CommonModule,
-    
-    
   ],
-  declarations: [],
+  declarations: [
+    ProductMovementReportComponent
+  ],
   imports:[
     RouterModule.forRoot(routes),
+    CommonModule,
+    SharedModule,
     GeneralRouterModule,
     ProductRouterModule,
     PersonRouterModule,
-    
-    
   ]
 
 })

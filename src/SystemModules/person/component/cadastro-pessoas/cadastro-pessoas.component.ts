@@ -182,6 +182,7 @@ export class CadastroPessoasComponent implements OnInit, OnChanges, AfterContent
       person_cep :        new FormControl('',[FormValidator.required,]),
       person_data_nasc :  new FormControl('',[FormValidator.required,]),
       person_sexo :       new FormControl('',[FormValidator.required,]),
+      person_email :      new FormControl('',[FormValidator.required,]),
       
       user_login :                  new FormControl('',[FormValidator.required,]),
       user_password :               new FormControl('',[FormValidator.required,]),
@@ -205,6 +206,7 @@ export class CadastroPessoasComponent implements OnInit, OnChanges, AfterContent
         this.clienteDTO.cep              =  currentClienteDTOForm?.person_cep;
         this.clienteDTO.data_nasc        =  currentClienteDTOForm?.person_data_nasc;
         this.clienteDTO.sexo             =  currentClienteDTOForm?.person_sexo;
+        this.clienteDTO.email            =  currentClienteDTOForm?.person_email;
         
         this.clienteDTO.usuario.login    =  currentClienteDTOForm?.user_login;
         this.clienteDTO.usuario.password =  currentClienteDTOForm?.user_password;
@@ -289,6 +291,7 @@ export class CadastroPessoasComponent implements OnInit, OnChanges, AfterContent
     this.clienteDTOForm.get("person_cep")?.setValue(clienteDTOLoad.cep);
     this.clienteDTOForm.get("person_data_nasc")?.setValue(clienteDTOLoad.data_nasc);
     this.clienteDTOForm.get("person_sexo")?.setValue(clienteDTOLoad.sexo);
+    this.clienteDTOForm.get("person_email")?.setValue(clienteDTOLoad.email);
 
     if(clienteDTOLoad.usuario != undefined && clienteDTOLoad.usuario != null){
       this.clienteDTO.usuario.id = clienteDTOLoad.usuario.id;

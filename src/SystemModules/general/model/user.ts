@@ -1,3 +1,4 @@
+import { FormGroup } from "@angular/forms";
 import { Person } from "src/SystemModules/person/model/person";
 
 export class User{

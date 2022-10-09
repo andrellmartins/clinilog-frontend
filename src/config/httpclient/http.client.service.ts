@@ -22,9 +22,9 @@ export class HttpClientService{
     public post(url:string, params:any){
         return this.httpClient.post(
             url,
-            {...(params ? params : {})},
+            this.handleParams(params),
             {
-                headers:this.headers()
+                headers:this.headers(params)
             }
         ).pipe(map((response:any) => {
             return response
@@ -34,9 +34,9 @@ export class HttpClientService{
     public put(url:string, params:any){
         return this.httpClient.put(
             url,
-            {...(params ? params : {})},
+            this.handleParams(params),
             {
-                headers:this.headers()
+                headers: this.headers(params)
             }
         ).pipe(map((response:any) => {
             return response
@@ -48,16 +48,23 @@ export class HttpClientService{
             url,
             {
                 ...(!!params ? {params} : {}),
-                headers:this.headers()
+                headers:this.headers(params)
             }
         ).pipe(map((response:any) => response));
     }
 
-    public headers():HttpHeaders{
+    public headers(params?:any):HttpHeaders{
         let headers: HttpHeaders = new HttpHeaders();
         headers = headers
-            .set('Content-type', 'application/json')
+        .set('Content-type', 'application/json')
         return headers;
+    }
+
+    private handleParams(params:any):any{
+        if(typeof params == 'string'){
+            return `${params}`
+        }
+        return {...(params ? params : {})};
     }
 
     handleError(response: Response) {

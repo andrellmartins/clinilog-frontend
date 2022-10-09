@@ -1,0 +1,78 @@
+<mat-accordion>
+  <mat-expansion-panel hideToggle="true" [hidden]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Relatório de Movimentação 
+      </mat-panel-title>
+      <mat-panel-description>
+        Editar Filtro
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <form [formGroup]="filtroRelatorioForm">
+      <mat-form-field>
+        <mat-label>Produto </mat-label>
+        <mat-select formControlName="produtos" name="products" multiple>
+            <mat-option *ngFor="let produto of produtos" [value]="produto">{{produto.descricao}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-error *ngIf="semLotesCadastradosNoProdutoSelecionado()">Sem Lotes Cadastrados</mat-error>
+      
+<ng-container *ngIf="permiteFiltroLote()">
+      <mat-form-field>
+        <mat-label>Lote </mat-label>
+        <mat-select formControlName="lotes" name="batches" multiple>
+          <mat-option *ngFor="let lote of lotes" [value]="lote">{{lote.lote}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox formControlName="conciliar_lote" name="conciliar_lote">Conciliar Lotes ?</mat-checkbox>
+</ng-container>
+      <mat-divider></mat-divider>
+      <mat-form-field>
+        <input formControlName="data_inicio"  matInput name="data_inicio"   placeholder="Data Início"     >
+      </mat-form-field>
+      <mat-form-field>
+        <input formControlName="data_fim"     matInput name="data_fim"      placeholder="Data de Término" >
+      </mat-form-field>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<div>
+  <apx-chart #chart id="chartEntrada"
+    [series]     =  "chartOptionsEntrada.series"
+    [chart]      =  "chartOptionsEntrada.chart"
+    [xaxis]      =  "chartOptionsEntrada.xaxis"
+    [stroke]     =  "chartOptionsEntrada.stroke"
+    [tooltip]    =  "chartOptionsEntrada.tooltip"
+    [dataLabels] =  "chartOptionsEntrada.dataLabels"
+    [legend]     =  "chartOptionsEntrada.legend"
+    [markers]    =  "chartOptionsEntrada.markers"
+    [grid]       =  "chartOptionsEntrada.grid"
+    [title]      =  "chartOptionsEntrada.title"
+  ></apx-chart>
+  <apx-chart #chart id="chartSaida"
+    [series]     =  "chartOptionsSaida.series"
+    [chart]      =  "chartOptionsSaida.chart"
+    [xaxis]      =  "chartOptionsSaida.xaxis"
+    [stroke]     =  "chartOptionsSaida.stroke"
+    [tooltip]    =  "chartOptionsSaida.tooltip"
+    [dataLabels] =  "chartOptionsSaida.dataLabels"
+    [legend]     =  "chartOptionsSaida.legend"
+    [markers]    =  "chartOptionsSaida.markers"
+    [grid]       =  "chartOptionsSaida.grid"
+    [title]      =  "chartOptionsSaida.title"
+  ></apx-chart>
+</div>
+
+<apx-chart #chart id="chartConciliado"
+  [series]     =  "chartOptionsConciliado.series"
+  [chart]      =  "chartOptionsConciliado.chart"
+  [xaxis]      =  "chartOptionsConciliado.xaxis"
+  [stroke]     =  "chartOptionsConciliado.stroke"
+  [tooltip]    =  "chartOptionsConciliado.tooltip"
+  [dataLabels] =  "chartOptionsConciliado.dataLabels"
+  [legend]     =  "chartOptionsConciliado.legend"
+  [markers]    =  "chartOptionsConciliado.markers"
+  [grid]       =  "chartOptionsConciliado.grid"
+  [title]      =  "chartOptionsConciliado.title"
+></apx-chart>

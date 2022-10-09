@@ -12,6 +12,9 @@ import { getCurrencySymbol } from '@angular/common';
   providedIn: 'root'
 })
 export class UserService {
+  emailRecuperaSenha(email: string):Observable<boolean> {
+    return this.httpClient.post('/user/recuperar-senha/email', email);
+  }
   static readonly currentUserToken = 'currentUser';
 
   static getCurrentUser(): Person | null {
@@ -38,10 +41,10 @@ export class UserService {
     );
   }
   
-  public alterarSenha(idUsuario:number, novaSenha:string ):Observable<boolean>{
+  public alterarSenha(idUsuario:number, newPassword:string ):Observable<boolean>{
     return this.httpClient.put(
       '/user/recuperar-senha/'+idUsuario, 
-      { novaSenha: novaSenha }
+      newPassword
     );
   }
 

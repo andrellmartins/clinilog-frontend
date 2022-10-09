@@ -4,6 +4,8 @@ import { SharedModule } from 'src/config/sharedmodules/shared.module';
 import { Routes } from '@angular/router';
 import { ProductGridComponent } from './component/product-grid/product-grid.component';
 import { CadastroProdutosComponent } from './component/cadastro-produtos/cadastro-produtos.component';
+import { CommonModule } from '@angular/common';
+import { ProductMovementReportComponent } from './component/product-movement-report/product-movement-report.component';
 
 export const productRoutes:Routes = [
   {
@@ -24,11 +26,11 @@ export const productRoutes:Routes = [
   imports: [
     GeneralRouterModule,
     SharedModule,
+    CommonModule
   ],
   exports: [
   ],
-  declarations: [
-  ]
+  declarations: []
 })
 export class ProductRouterModule{ 
   

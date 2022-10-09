@@ -6,11 +6,8 @@
   align-content: center;
   align-items: center;
 }
-.containerLogin:has(app-login){
+.containerLogin{
   justify-content: center;
-}
-.containerLogin:has(app-cadastro){
-  justify-content: flex-start;
 }
 .backgroundLogin{
   position: fixed;
