@@ -8,8 +8,8 @@
     <div>
         <button mat-button [matMenuTriggerFor]="menu" class="navigation-items">Menu</button>
         <mat-menu #menu class="navigation-items">
-            <button mat-menu-item routerLink="pessoas">Módulo de Pessoas</button>
-            <button mat-menu-item routerLink="produtos">Módulo de Produtos</button>
+            <button mat-menu-item *ngIf="hasAuthority('pessoas')" routerLink="pessoas">Módulo de Pessoas</button>
+            <button mat-menu-item *ngIf="hasAuthority('estoque')" routerLink="produtos">Módulo de Produtos</button>
         </mat-menu>
     </div>
     <div id="userMenu">

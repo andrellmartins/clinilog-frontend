@@ -1,0 +1,23 @@
+<table mat-table [width]="'100%'" [dataSource]="cargos">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="cargo">
+    <th mat-header-cell *matHeaderCellDef> Cargo </th>
+    <td mat-cell *matCellDef="let element"> {{element.cargo}} </td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="acesso_modulo_pessoas">
+    <th mat-header-cell *matHeaderCellDef>  Acesso Ao Módulo de Pessoas</th>
+    <td mat-cell *matCellDef="let element"> <mat-checkbox [checked]="element.acesso_modulo_pessoas" (change)="mudarAcessoCargo(element.id, 'acesso_modulo_pessoas', $event.checked)" ></mat-checkbox></td>
+    </ng-container>
+    
+    <!-- Position Column -->
+    <ng-container matColumnDef="acesso_modulo_estoque">
+    <th mat-header-cell *matHeaderCellDef>  Acesso Ao Módulo de Estoque</th>
+    <td mat-cell *matCellDef="let element"> <mat-checkbox [checked]="element.acesso_modulo_estoque" (change)="mudarAcessoCargo(element.id, 'acesso_modulo_estoque', $event.checked)" ></mat-checkbox></td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="cargoColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: cargoColumns;"></tr>
+</table>

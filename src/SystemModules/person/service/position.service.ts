@@ -7,7 +7,6 @@ import { Position } from '../model/position';
   providedIn: 'root'
 })
 export class PositionService {
-
   constructor(
     private httpClient:HttpClientService
   ) { }
@@ -24,5 +23,17 @@ export class PositionService {
       )
     )
   }
+
+  atualizarPermissaoCargos(idCargo: number, campo: string, newValue: boolean):Observable<boolean> {
+    return this.httpClient.post(
+      '/position/permissao/',
+      {
+        idCargo:idCargo,
+        campo:campo,
+        newValue:newValue,
+      }
+    );
+  }  
+  
 
 }

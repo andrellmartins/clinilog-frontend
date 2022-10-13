@@ -22,6 +22,7 @@ export class Person {
     public employee?:Employee;
     public paciente?:Patient;
     public usuario!:User;
+    public authorities!:{authority:string}[];
     
     static initializeWithJson(jsonString:string):Person{
         return Object.assign(new Person,JSON.parse(jsonString));
