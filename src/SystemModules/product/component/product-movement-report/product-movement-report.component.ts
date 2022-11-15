@@ -63,7 +63,6 @@ export class ProductMovementReportComponent implements OnInit, OnChanges{
     this.filtroRelatorioForm = new FormGroup({
       produtos:       new FormControl<Product[] > ([]    ),
       lotes:          new FormControl<Batch[]   > ([]    ),
-      conciliar_lote: new FormControl<boolean   > (false ),
       data_inicio:    new FormControl             (''    ),
       data_fim:       new FormControl             (''    ),
     });
@@ -73,7 +72,6 @@ export class ProductMovementReportComponent implements OnInit, OnChanges{
       this.filtroRelatorioDTO = {
         produtos        :currentProductDTOForm.produtos        ,
         lotes           :currentProductDTOForm.lotes           ,
-        conciliar_lote  :currentProductDTOForm.conciliar_lote  ,
         data_inicio     :currentProductDTOForm.data_inicio     ,
         data_fim        :currentProductDTOForm.data_fim        ,
       }
